@@ -59,6 +59,10 @@ def main() -> None:
         c = sub.add_parser(cmd, help=text)
         c.add_argument("dataset", nargs="?", default="data/starter")
 
+    ld = sub.add_parser("load", help="load a generated dataset into PostgreSQL")
+    ld.add_argument("dataset", nargs="?", default="data/starter")
+    ld.add_argument("--database-url", default=None)
+
     a = sub.add_parser("all", help="generate, validate and reconcile in one go")
     add_profile_args(a)
     a.add_argument("--out", default=None)
@@ -77,6 +81,11 @@ def main() -> None:
     elif args.command == "reconcile":
         report = run_reconcile(Path(args.dataset))
         print_reconcile(report)
+    elif args.command == "load":
+        from .db.load import load_dataset
+
+        counts = load_dataset(Path(args.dataset), args.database_url)
+        print(f"loaded {args.dataset}: " + ", ".join(f"{k} {v}" for k, v in counts.items()))
     elif args.command == "all":
         profile = pick_profile(args)
         out = Path(args.out or f"data/{profile.name}")
