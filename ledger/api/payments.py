@@ -18,6 +18,11 @@ class PaymentRequest(BaseModel):
     method: Literal["CARD", "BANK_TRANSFER", "SPONSOR", "CHEQUE"]
 
 
+class RefundRequest(BaseModel):
+    payment_id: str
+    amount: Decimal = Field(gt=0, max_digits=14, decimal_places=2)
+
+
 def counter(db, key):
     return db.execute("""INSERT INTO id_counters(counter_key,value) VALUES (%s,1)
         ON CONFLICT(counter_key) DO UPDATE SET value=id_counters.value+1 RETURNING value""", (key,)).fetchone()["value"]
@@ -79,3 +84,46 @@ def record_payment(body: PaymentRequest, db=Depends(get_db), actor=Depends(get_a
                     today, actor.role, payment_id))
     db.commit()
     return {"payment_id": payment_id, "allocated": dollars(amount - remainder), "unapplied": dollars(remainder)}
+
+
+@router.post("/refunds", status_code=201)
+def refund(body: RefundRequest, db=Depends(get_db), actor=Depends(get_actor)):
+    if actor.role not in ("support_staff", "platform_admin"):
+        raise HTTPException(403, "not permitted")
+    payment = db.execute("SELECT * FROM payments WHERE payment_id=%s FOR UPDATE", (body.payment_id,)).fetchone()
+    if not payment:
+        raise HTTPException(404, "payment not found")
+    account = db.execute("SELECT * FROM student_accounts WHERE student_id=%s FOR UPDATE",
+                         (payment["student_id"],)).fetchone()
+    available = min(payment["amount"] - payment["amount_refunded"],
+                    payment["amount_unapplied"] - payment["amount_refunded"], account["unapplied_credit"])
+    today = date.today()
+    decision = counter(db, "decision")
+    approved = body.amount <= available
+    explanation = ("unapplied payment credit available" if approved
+                   else f"requested refund exceeds available credit {available}")
+    db.execute("INSERT INTO decisions VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+               (f"DEC-{decision:09d}", "RULE-REFUND", "PAYMENT", body.payment_id,
+                "APPROVED" if approved else "REJECTED", body.amount, today, explanation))
+    if not approved:
+        db.commit()
+        raise HTTPException(409, explanation)
+    refund_id = ids.refund_id(today.year, counter(db, f"refund:{today.year}"))
+    db.execute("INSERT INTO refunds VALUES (%s,%s,%s,%s,%s,%s,%s)",
+               (refund_id, payment["student_id"], body.payment_id, None, "OVERPAYMENT", body.amount, today))
+    db.execute("UPDATE payments SET amount_refunded=amount_refunded+%s WHERE payment_id=%s",
+               (body.amount, body.payment_id))
+    balance = account["balance"] + body.amount
+    seq = db.execute("SELECT count(*) AS n FROM ledger_entries WHERE student_id=%s",
+                     (payment["student_id"],)).fetchone()["n"] + 1
+    db.execute("INSERT INTO ledger_entries VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+               (f"LED-{payment['student_id']}-{seq:06d}", payment["student_id"], today, "REFUND", refund_id,
+                None, body.amount, balance))
+    db.execute("UPDATE student_accounts SET total_refunded=total_refunded+%s, unapplied_credit=unapplied_credit-%s, "
+               "balance=%s, as_of=%s WHERE student_id=%s",
+               (body.amount, body.amount, balance, today, payment["student_id"]))
+    event = counter(db, "event")
+    db.execute("INSERT INTO events VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+               (f"EVT-{event:09d}", "REFUND", refund_id, "ISSUED", None, "ISSUED", today, actor.role, body.payment_id))
+    db.commit()
+    return {"refund_id": refund_id, "amount": body.amount}
