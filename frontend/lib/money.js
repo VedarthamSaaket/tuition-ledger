@@ -4,7 +4,7 @@ const format = new Intl.NumberFormat('en-IN', {
 
 export function formatMoney(value) {
   const amount = Number(value);
-  return value == null || value === '' || !Number.isFinite(amount) ? '—' : format.format(amount);
+  return value == null || value === '' || !Number.isFinite(amount) ? 'Not available' : format.format(amount);
 }
 
 const monetaryFields = new Set([

@@ -41,7 +41,9 @@ npm ci
 npm run dev
 ```
 
-Open the URL printed by Vite. Its development server proxies API requests to port 8000. The interface is a local demo: selecting a role does not prove identity.
+Open the URL printed by Vite. Its development server proxies API requests to port 8000. On the landing page, choose a role and select Enter. Learners also provide their student ID; instructors can select a programme and term to view a roster. The interface is a local demo: selecting a role does not prove identity. Use Change role in the workspace to return to the landing page.
+
+The interface uses locally bundled Playfair Display and DM Sans fonts. Their SIL Open Font License notices are in `frontend/assets/fonts/`.
 
 ## Test
 
