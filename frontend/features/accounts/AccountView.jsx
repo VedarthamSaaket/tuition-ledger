@@ -1,14 +1,27 @@
 import React from 'react';
 import Table from '../../components/Table.jsx';
 
-export default function AccountView({data, money, load, setInvoice, setSelected, role, refund, refundPayment, setRefundPayment, refundReason, setRefundReason, refundAmount, setRefundAmount, submitting}) {
+export default function AccountView({data, money, load, notice, setInvoice, setSelected, role, refund, refundPayment, setRefundPayment, refundReason, setRefundReason, refundAmount, setRefundAmount, submitting}) {
+  function openLedger() {
+    notice('Loading ledger…');
+    load('/students/' + data.student_id + '/ledger', setInvoice).then(rows => {
+      if (rows) notice(rows.length ? `Ledger opened with ${rows.length} entries.` : 'Ledger opened. No entries were recorded.');
+    });
+  }
+  function openInvoice(invoiceId) {
+    notice('Opening invoice…');
+    setSelected(data.student_id);
+    load('/invoices/' + invoiceId, setInvoice).then(value => {
+      if (value) notice('Invoice opened below.');
+    });
+  }
   return <>
     <h2>{data.first_name} {data.last_name}</h2>
     <p>Account balance <strong>{money(data.account.balance)}</strong> · Ledger balance {money(data.ledger_balance)}</p>
-    <button onClick={() => load('/students/' + data.student_id + '/ledger', setInvoice)}>View ledger</button>
+    <button onClick={openLedger}>View ledger</button>
     <h3>Invoices</h3>
     <div className="list">{data.enrollments.map(e => e.invoice_id ?
-      <button key={e.enrollment_id + e.invoice_id} onClick={() => {setSelected(data.student_id); load('/invoices/' + e.invoice_id, setInvoice)}}>
+      <button key={e.enrollment_id + e.invoice_id} onClick={() => openInvoice(e.invoice_id)}>
         <span>{e.invoice_id}<small>{e.term_id} · {e.invoice_status}</small></span><b>{money(e.balance)}</b>
       </button> : <p key={e.enrollment_id}>{e.term_id} · Invoice not issued</p>)}</div>
     <h3>Payments</h3><Table rows={data.payments}/>

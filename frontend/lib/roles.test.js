@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import { deepStrictEqual, ok } from 'node:assert';
-import { prepareEntry, roles, roleDetails } from './roles.js';
+import { prepareEntry, roles, roleDetails, SAMPLE_STUDENT_ID } from './roles.js';
 
 test('role navigation matches the available workspace permissions', () => {
   deepStrictEqual(roleDetails('learner').views, ['My account', 'Fees']);
@@ -14,6 +14,7 @@ test('entry requires a role and validates learner identity without signing in', 
   ok(prepareEntry('', '').error);
   ok(prepareEntry('learner', '').error);
   deepStrictEqual(prepareEntry('learner', ' stu-000001 '), {role: 'learner', studentId: 'STU-000001'});
+  deepStrictEqual(prepareEntry('learner', SAMPLE_STUDENT_ID), {role: 'learner', studentId: SAMPLE_STUDENT_ID});
   deepStrictEqual(prepareEntry('instructor', 'STU-000001'), {role: 'instructor', studentId: ''});
   ok(prepareEntry('unknown', '').error);
 });

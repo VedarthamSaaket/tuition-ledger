@@ -1,3 +1,5 @@
+export const SAMPLE_STUDENT_ID = 'STU-000001';
+
 export const roles = [
   { id: 'learner', label: 'Learner', description: 'See your account, invoices, and history.', views: ['My account', 'Fees'] },
   { id: 'instructor', label: 'Instructor', description: 'Explore programmes, terms, and class rosters.', views: ['Roster', 'Fees'] },
