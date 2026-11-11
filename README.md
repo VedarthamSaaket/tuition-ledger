@@ -18,6 +18,11 @@ The role headers demonstrate access rules, not authentication: callers can choos
 
 The full profile is generated locally but not committed: the CSV/JSON/SQL export is about 518 MB. The committed starter profile uses the same generator at a smaller scale.
 
+## Reviewer documents
+
+- `docs/testing_guide.md` — requirement-to-test mapping, exact commands, expected results and a five-role walkthrough.
+- `docs/reviews_and_decisions.md` — owner review requests, audit findings and the major design decisions.
+
 ## Setup
 
 You need Python 3.11 or newer and PostgreSQL 16.
