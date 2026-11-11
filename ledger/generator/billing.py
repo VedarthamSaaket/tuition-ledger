@@ -93,8 +93,8 @@ def random_dates(rng, lo: date, hi: date, k: int) -> list[date]:
     return sorted(lo + timedelta(days=rng.randint(0, span)) for _ in range(k))
 
 
-def round_dollars(cents: int) -> int:
-    return max(100, (cents // 100) * 100)
+def round_rupees(paise: int) -> int:
+    return max(100, (paise // 100) * 100)
 
 
 class InvoiceSim:
@@ -143,9 +143,9 @@ class InvoiceSim:
             for line in self.lines if line["line_id"] in opens
         ]
         taken, rest = rules.allocate(amount, items)
-        for item, cents in taken:
+        for item, paise in taken:
             alloc = {"payment": payment, "invoice_id": self.inv["invoice_id"], "line_id": item["line_id"],
-                     "amount": cents, "allocated_on": on}
+                     "amount": paise, "allocated_on": on}
             payment["_allocs"].append(alloc)
             self.allocs.append(alloc)
         payment["_unapplied"] = rest
@@ -218,14 +218,14 @@ class InvoiceSim:
 def payment_amount(behaviour: str, i: int, count: int, remaining: int, plan_values: dict) -> int:
     last = i == count - 1
     if behaviour == "PARTIAL":
-        return round_dollars(plan_values["partial_total"] // count)
+        return round_rupees(plan_values["partial_total"] // count)
     if behaviour == "OVERPAY" and count == 2 and last:
         return plan_values["previous"]
     if behaviour == "OVERPAY" and count == 1:
         return remaining + plan_values["extra"]
     if last or behaviour == "OVERPAY":
         return remaining
-    return round_dollars(remaining // (count - i))
+    return round_rupees(remaining // (count - i))
 
 
 def run_invoice(ds: Dataset, inv: dict, enr: dict, behaviour: str, count: int) -> None:

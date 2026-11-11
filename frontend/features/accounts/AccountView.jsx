@@ -21,7 +21,7 @@ export default function AccountView({data, money, load, setInvoice, setSelected,
         <select aria-label="Refund reason" value={refundReason} onChange={e => setRefundReason(e.target.value)}>
           <option>OVERPAYMENT</option><option>WITHDRAWAL</option><option>CANCELLATION</option>
         </select>
-        <input aria-label="Refund amount" type="number" min="0.01" step="0.01" required placeholder="Refund amount" value={refundAmount} onChange={e => setRefundAmount(e.target.value)}/>
+        <input aria-label="Refund amount in rupees" type="number" min="0.01" step="0.01" required placeholder="Refund amount (₹)" value={refundAmount} onChange={e => setRefundAmount(e.target.value)}/>
         <button disabled={submitting}>Record refund</button>
       </form>
     </>}

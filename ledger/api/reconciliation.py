@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from psycopg.types.json import Jsonb
 
 from ..checks import reconcile
-from ..db.conn import cents, dollars
+from ..db.conn import paise, rupees
 from ..schema import LOAD_ORDER, TABLES_BY_NAME
 from .deps import get_db, require
 
@@ -23,7 +23,7 @@ def run(db=Depends(get_db), actor=ADMIN):
         monetary = [col.name for col in TABLES_BY_NAME[name].cols if col.type == "money"]
         for row in rows:
             for col in monetary:
-                row[col] = cents(row[col])
+                row[col] = paise(row[col])
         tables[name] = rows
     found = reconcile.detect(tables)
     boundaries = reconcile.boundary_cases(tables, found)
@@ -35,7 +35,7 @@ def run(db=Depends(get_db), actor=ADMIN):
     for row in found:
         db.execute("INSERT INTO exceptions VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                    (row["exception_id"], run_id, row["issue_type"], row["entity_type"], row["entity_id"],
-                    row["related_ids"], row["expected_decision"], dollars(row["detected_value"]),
+                    row["related_ids"], row["expected_decision"], rupees(row["detected_value"]),
                     row["explanation"]))
     db.commit()
     return {"run_id": run_id, "exceptions_found": len(found), "kpis": kpis, "boundary_cases": boundaries}

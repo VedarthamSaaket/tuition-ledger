@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { formatMoney } from '../../lib/money.js';
 
 const setupForms = {
   Program: {path:'/programs', fields:[['name','text'],['level','UG|PG|DIP|CERT'],['department','STEM|BUSINESS|ARTS|HEALTH'],['has_lab','boolean']]},
@@ -25,8 +26,8 @@ export default function Setup({api}) {
     try {
       const path=kind==='Invoice' ? '/enrollments/'+encodeURIComponent(body.enrollment_id)+'/invoice' : form.path;
       const response=await api(path,{method:'POST', ...(kind==='Invoice' ? {} : {body:JSON.stringify(body)})});
-      setResult(JSON.stringify(response)); setValues({});
+      setResult(response.net_amount == null ? JSON.stringify(response) : `${response.invoice_id} · ${formatMoney(response.net_amount)}`); setValues({});
     } catch(err) {setError(typeof err.message==='string' ? err.message : 'Could not create record');}
   }
-  return <div className="panel"><p>Create reference data before enrolling a student and issuing an invoice.</p><label>Record type <select value={kind} onChange={e=>{setKind(e.target.value);setValues({});setResult('');setError('')}}>{Object.keys(setupForms).map(k=><option key={k}>{k}</option>)}</select></label><form className="setup-form" onSubmit={submit}>{form.fields.map(([name,type])=><label key={name}>{name.replaceAll('_',' ')} {type==='boolean' ? <input type="checkbox" checked={values[name]===true} onChange={e=>setValues({...values,[name]:e.target.checked})}/> : type.includes('|') ? <select value={values[name]??type.split('|')[0]} onChange={e=>setValues({...values,[name]:e.target.value})}>{type.split('|').map(option=><option key={option}>{option}</option>)}</select> : <input type={type==='optional-date'?'date':type==='decimal'?'number':type} step={type==='decimal'?'0.01':undefined} required={type!=='optional-date'} value={values[name]??''} onChange={e=>setValues({...values,[name]:e.target.value})}/>}</label>)}<button type="submit">Create {kind.toLowerCase()}</button></form>{result && <p role="status">Created: {result}</p>}{error && <p className="error" role="alert">{error}</p>}</div>;
+  return <div className="panel"><p>Create reference data before enrolling a student and issuing an invoice. Monetary rates are in Indian rupees (₹).</p><label>Record type <select value={kind} onChange={e=>{setKind(e.target.value);setValues({});setResult('');setError('')}}>{Object.keys(setupForms).map(k=><option key={k}>{k}</option>)}</select></label><form className="setup-form" onSubmit={submit}>{form.fields.map(([name,type])=><label key={name}>{name.replaceAll('_',' ')} {name==='rate' && '(₹)'} {type==='boolean' ? <input type="checkbox" checked={values[name]===true} onChange={e=>setValues({...values,[name]:e.target.checked})}/> : type.includes('|') ? <select value={values[name]??type.split('|')[0]} onChange={e=>setValues({...values,[name]:e.target.value})}>{type.split('|').map(option=><option key={option}>{option}</option>)}</select> : <input type={type==='optional-date'?'date':type==='decimal'?'number':type} step={type==='decimal'?'0.01':undefined} required={type!=='optional-date'} value={values[name]??''} onChange={e=>setValues({...values,[name]:e.target.value})}/>}</label>)}<button type="submit">Create {kind.toLowerCase()}</button></form>{result && <p role="status">Created: {result}</p>}{error && <p className="error" role="alert">{error}</p>}</div>;
 }

@@ -42,7 +42,7 @@ def write(out_dir: Path) -> None:
                 col.desc,
             ])
     lines = ["# Data dictionary", "", "Generated from ledger/schema.py by python -m ledger dictionary.",
-             "Money is stored as dollars with two decimals and handled as integer cents in code.", "",
+             "Money is stored as rupees with two decimals and handled as integer paise in code.", "",
              "## Relationships", ""]
     lines += [f"- {r}" for r in RELATIONSHIPS]
     for table in (*TABLES, GROUND_TRUTH):

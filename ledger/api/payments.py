@@ -5,7 +5,7 @@ from typing import Literal
 from fastapi import APIRouter, Depends, Header, HTTPException
 from pydantic import BaseModel, Field
 
-from ..db.conn import cents, dollars
+from ..db.conn import paise, rupees
 from ..domain import ids, rules
 from ..services.transactions import counter, lock_reconciled_account, prior_request, save_request
 from .deps import get_actor, get_db
@@ -44,19 +44,19 @@ def record_payment(body: PaymentRequest, idempotency_key: str = Header(min_lengt
     lines = db.execute("SELECT * FROM invoice_lines WHERE invoice_id=%s", (body.invoice_id,)).fetchall()
     allocations = db.execute("SELECT * FROM payment_allocations WHERE invoice_id=%s", (body.invoice_id,)).fetchall()
     for row in lines + allocations:
-        row["amount"] = cents(row["amount"])
+        row["amount"] = paise(row["amount"])
     opened = rules.line_open_amounts(lines, allocations)
     items = [{**line, "open": opened[line["line_id"]]} for line in lines if line["line_id"] in opened]
-    amount = cents(body.amount)
+    amount = paise(body.amount)
     splits, remainder = rules.allocate(amount, items)
     payment_id = ids.payment_id(today.year, counter(db, f"payment:{today.year}"))
     db.execute("INSERT INTO payments VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                (payment_id, inv["student_id"], body.invoice_id, today, body.amount, body.method,
-                dollars(amount - remainder), dollars(remainder), 0))
+                rupees(amount - remainder), rupees(remainder), 0))
     for n, (line, value) in enumerate(splits, 1):
         db.execute("INSERT INTO payment_allocations VALUES (%s,%s,%s,%s,%s,%s)",
                    (ids.allocation_id(payment_id, n), payment_id, body.invoice_id, line["line_id"],
-                    dollars(value), today))
+                    rupees(value), today))
     seq = db.execute("SELECT count(*) AS n FROM ledger_entries WHERE student_id=%s",
                      (inv["student_id"],)).fetchone()["n"] + 1
     balance = account["balance"] - body.amount
@@ -65,10 +65,10 @@ def record_payment(body: PaymentRequest, idempotency_key: str = Header(min_lengt
                 body.invoice_id, -body.amount, balance))
     db.execute("UPDATE student_accounts SET total_paid=total_paid+%s, unapplied_credit=unapplied_credit+%s, "
                "balance=%s, as_of=%s WHERE student_id=%s",
-               (body.amount, dollars(remainder), balance, today, inv["student_id"]))
-    allocated = inv["amount_allocated"] + dollars(amount - remainder)
+               (body.amount, rupees(remainder), balance, today, inv["student_id"]))
+    allocated = inv["amount_allocated"] + rupees(amount - remainder)
     invoice_balance = inv["net_amount"] - allocated + inv["amount_refunded"]
-    status = rules.invoice_status({"balance": cents(invoice_balance), "amount_allocated": cents(allocated)},
+    status = rules.invoice_status({"balance": paise(invoice_balance), "amount_allocated": paise(allocated)},
                                   inv["due_date"], today, False)
     db.execute("UPDATE invoices SET amount_allocated=%s,balance=%s,status=%s WHERE invoice_id=%s",
                (allocated, invoice_balance, status, body.invoice_id))
@@ -81,7 +81,7 @@ def record_payment(body: PaymentRequest, idempotency_key: str = Header(min_lengt
         db.execute("INSERT INTO events VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                    (f"EVT-{event:09d}", "INVOICE", body.invoice_id, "STATUS_CHANGED", inv["status"], status,
                     today, actor.role, payment_id))
-    result = {"payment_id": payment_id, "allocated": str(dollars(amount - remainder)), "unapplied": str(dollars(remainder))}
+    result = {"payment_id": payment_id, "allocated": str(rupees(amount - remainder)), "unapplied": str(rupees(remainder))}
     save_request(db, "payment", idempotency_key, request_body, result)
     db.commit()
     return result
@@ -140,7 +140,7 @@ def refund(body: RefundRequest, idempotency_key: str = Header(min_length=16, max
                (body.amount, body.amount if invoice_id is None else 0, balance, today, payment["student_id"]))
     if invoice_id:
         invoice_balance = invoice["balance"] + body.amount
-        summary = {"balance": cents(invoice_balance), "amount_allocated": cents(invoice["amount_allocated"])}
+        summary = {"balance": paise(invoice_balance), "amount_allocated": paise(invoice["amount_allocated"])}
         status = rules.invoice_status(summary, invoice["due_date"], today, body.reason == "CANCELLATION")
         db.execute("UPDATE invoices SET amount_refunded=amount_refunded+%s,balance=%s,status=%s WHERE invoice_id=%s",
                    (body.amount, invoice_balance, status, invoice_id))

@@ -139,8 +139,8 @@ def evaluate(found: list[dict], ground_truth: list[dict]) -> dict:
                         "recall": round(recall, 4)}, "per_type": per_type}
 
 
-def money(cents: int) -> float:
-    return round(cents / 100, 2)
+def money(paise: int) -> float:
+    return round(paise / 100, 2)
 
 
 def kpis(t: dict, as_of=AS_OF) -> dict:

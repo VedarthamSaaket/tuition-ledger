@@ -31,7 +31,7 @@ fee_schedules,FeeSchedule,program_id,id,yes,no,,,programs.program_id,,Program
 fee_schedules,FeeSchedule,term_id,id,yes,no,,,terms.term_id,,Term
 fee_schedules,FeeSchedule,fee_code,text,yes,no,TECH|LIBRARY|ACTIVITY|LAB|HEALTH_INSURANCE|INTL_SURCHARGE|TUITION,,,,Fee code
 fee_schedules,FeeSchedule,basis,text,yes,no,PER_CREDIT|FLAT,,,,Charging basis
-fee_schedules,FeeSchedule,rate,money,yes,no,,USD,,,Rate per credit or flat amount
+fee_schedules,FeeSchedule,rate,money,yes,no,,INR,,,Rate per credit or flat amount
 fee_schedules,FeeSchedule,applies_when,text,yes,no,ALL|INTL|FULL_TIME|LAB_PROGRAM|FULL_TIME_NO_COVER,,,,Condition for the fee to be billed
 fee_schedules,FeeSchedule,version,int,yes,no,,,,,"Schedule version for this program, term and fee"
 fee_schedules,FeeSchedule,effective_from,date,yes,no,,,,,First day this rate is in effect
@@ -53,13 +53,13 @@ invoices,Invoice,enrollment_id,id,yes,no,,,enrollments.enrollment_id,,Enrollment
 invoices,Invoice,term_id,id,yes,no,,,terms.term_id,,Term
 invoices,Invoice,issue_date,date,yes,no,,,,,Issue date
 invoices,Invoice,due_date,date,yes,no,,,,after issue_date,Due date
-invoices,Invoice,total_charges,money,yes,no,,USD,,derived,Sum of CHARGE and LATE_FEE lines
-invoices,Invoice,total_credits,money,yes,no,,USD,,derived,Sum of scholarship and waiver credits
-invoices,Invoice,total_reversals,money,yes,no,,USD,,derived,Sum of withdrawal and cancellation reversals
-invoices,Invoice,net_amount,money,yes,no,,USD,,derived,Charges minus credits minus reversals
-invoices,Invoice,amount_allocated,money,yes,no,,USD,,derived,Payments allocated to the lines
-invoices,Invoice,amount_refunded,money,yes,no,,USD,,derived,Refunds paid out against this invoice
-invoices,Invoice,balance,money,yes,no,,USD,,derived,net_amount minus allocated plus refunded
+invoices,Invoice,total_charges,money,yes,no,,INR,,derived,Sum of CHARGE and LATE_FEE lines
+invoices,Invoice,total_credits,money,yes,no,,INR,,derived,Sum of scholarship and waiver credits
+invoices,Invoice,total_reversals,money,yes,no,,INR,,derived,Sum of withdrawal and cancellation reversals
+invoices,Invoice,net_amount,money,yes,no,,INR,,derived,Charges minus credits minus reversals
+invoices,Invoice,amount_allocated,money,yes,no,,INR,,derived,Payments allocated to the lines
+invoices,Invoice,amount_refunded,money,yes,no,,INR,,derived,Refunds paid out against this invoice
+invoices,Invoice,balance,money,yes,no,,INR,,derived,net_amount minus allocated plus refunded
 invoices,Invoice,status,text,yes,no,UNPAID|PARTIALLY_PAID|PAID|OVERDUE|IN_CREDIT|CANCELLED,,,derived,Status as of the dataset date
 invoice_lines,InvoiceLine,line_id,id,yes,yes,,,,pattern <invoice>-L00,Line identifier
 invoice_lines,InvoiceLine,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice
@@ -68,8 +68,8 @@ invoice_lines,InvoiceLine,line_type,text,yes,no,CHARGE|SCHOLARSHIP|WAIVER|LATE_F
 invoice_lines,InvoiceLine,fee_code,text,yes,no,TECH|LIBRARY|ACTIVITY|LAB|HEALTH_INSURANCE|INTL_SURCHARGE|TUITION|LATE_FEE,,,,Fee code
 invoice_lines,InvoiceLine,fee_schedule_id,id,no,no,,,fee_schedules.fee_schedule_id,required for CHARGE lines,Schedule row priced from
 invoice_lines,InvoiceLine,quantity,int,no,no,,,,,Credits or 1
-invoice_lines,InvoiceLine,unit_amount,money,no,no,,USD,,,Rate used
-invoice_lines,InvoiceLine,amount,money,yes,no,,USD,,,"Signed amount, charges positive, credits negative"
+invoice_lines,InvoiceLine,unit_amount,money,no,no,,INR,,,Rate used
+invoice_lines,InvoiceLine,amount,money,yes,no,,INR,,,"Signed amount, charges positive, credits negative"
 invoice_lines,InvoiceLine,applies_to_line_id,id,no,no,,,invoice_lines.line_id,,Charge line a credit or reversal reduces
 invoice_lines,InvoiceLine,scholarship_id,id,no,no,,,scholarships.scholarship_id,,Award behind a credit line
 invoice_lines,InvoiceLine,posted_on,date,yes,no,,,,,Date the line was posted
@@ -78,8 +78,8 @@ scholarship_schemes,ScholarshipScheme,scheme_id,id,yes,yes,,,,pattern SCHEME-<NA
 scholarship_schemes,ScholarshipScheme,name,text,yes,no,,,,,Scheme name
 scholarship_schemes,ScholarshipScheme,award_type,text,yes,no,SCHOLARSHIP|WAIVER,,,,Scholarship or waiver
 scholarship_schemes,ScholarshipScheme,basis,text,yes,no,PERCENT|FIXED,,,,Percent of eligible fees or fixed amount
-scholarship_schemes,ScholarshipScheme,value,int,yes,no,,,,,"Percent for PERCENT, cents for FIXED"
-scholarship_schemes,ScholarshipScheme,cap,money,no,no,,USD,,,Maximum award
+scholarship_schemes,ScholarshipScheme,value,int,yes,no,,,,,"Percent for PERCENT, paise for FIXED"
+scholarship_schemes,ScholarshipScheme,cap,money,no,no,,INR,,,Maximum award
 scholarship_schemes,ScholarshipScheme,fee_codes,text,yes,no,,,,,"Eligible fee codes, pipe separated"
 scholarship_schemes,ScholarshipScheme,criteria,text,yes,no,,,,,Readable eligibility criteria
 eligibility,Eligibility,eligibility_id,id,yes,yes,,,,pattern ELG-YYYY-000000,Assessment identifier
@@ -99,31 +99,31 @@ scholarships,Scholarship,student_id,id,yes,no,,,students.student_id,,Student
 scholarships,Scholarship,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice credited
 scholarships,Scholarship,scheme_id,id,yes,no,,,scholarship_schemes.scheme_id,,Scheme
 scholarships,Scholarship,award_type,text,yes,no,SCHOLARSHIP|WAIVER,,,,Scholarship or waiver
-scholarships,Scholarship,eligible_fee_base,money,yes,no,,USD,,,Eligible fees on the invoice when awarded
-scholarships,Scholarship,award_amount,money,yes,no,,USD,,never above eligible_fee_base,Amount credited
+scholarships,Scholarship,eligible_fee_base,money,yes,no,,INR,,,Eligible fees on the invoice when awarded
+scholarships,Scholarship,award_amount,money,yes,no,,INR,,never above eligible_fee_base,Amount credited
 scholarships,Scholarship,awarded_on,date,yes,no,,,,,Award date
 scholarships,Scholarship,status,text,yes,no,AWARDED|CANCELLED,,,,Award state
 payments,Payment,payment_id,id,yes,yes,,,,pattern PAY-YYYY-000000,Payment identifier
 payments,Payment,student_id,id,yes,no,,,students.student_id,,Student
 payments,Payment,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice quoted as reference
 payments,Payment,received_on,date,yes,no,,,,on or after invoice issue_date,Date received
-payments,Payment,amount,money,yes,no,,USD,,greater than zero,Amount received
+payments,Payment,amount,money,yes,no,,INR,,greater than zero,Amount received
 payments,Payment,method,text,yes,no,CARD|BANK_TRANSFER|SPONSOR|CHEQUE,,,,Payment method
-payments,Payment,amount_allocated,money,yes,no,,USD,,derived,Allocated to invoice lines
-payments,Payment,amount_unapplied,money,yes,no,,USD,,derived,Held as student credit
-payments,Payment,amount_refunded,money,yes,no,,USD,,derived,Refunded from this payment
+payments,Payment,amount_allocated,money,yes,no,,INR,,derived,Allocated to invoice lines
+payments,Payment,amount_unapplied,money,yes,no,,INR,,derived,Held as student credit
+payments,Payment,amount_refunded,money,yes,no,,INR,,derived,Refunded from this payment
 payment_allocations,PaymentAllocation,allocation_id,id,yes,yes,,,,pattern ALLOC-<payment>-00,Allocation identifier
 payment_allocations,PaymentAllocation,payment_id,id,yes,no,,,payments.payment_id,,Payment
 payment_allocations,PaymentAllocation,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice
 payment_allocations,PaymentAllocation,line_id,id,yes,no,,,invoice_lines.line_id,,Line paid
-payment_allocations,PaymentAllocation,amount,money,yes,no,,USD,,greater than zero,Amount allocated
+payment_allocations,PaymentAllocation,amount,money,yes,no,,INR,,greater than zero,Amount allocated
 payment_allocations,PaymentAllocation,allocated_on,date,yes,no,,,,,Allocation date
 refunds,Refund,refund_id,id,yes,yes,,,,pattern REF-YYYY-000000,Refund identifier
 refunds,Refund,student_id,id,yes,no,,,students.student_id,,Student
 refunds,Refund,payment_id,id,yes,no,,,payments.payment_id,,Payment refunded from
 refunds,Refund,invoice_id,id,no,no,,,invoices.invoice_id,,Invoice for withdrawal or cancellation refunds
 refunds,Refund,reason,text,yes,no,OVERPAYMENT|WITHDRAWAL|CANCELLATION,,,,Reason
-refunds,Refund,amount,money,yes,no,,USD,,not above payment net paid,Amount refunded
+refunds,Refund,amount,money,yes,no,,INR,,not above payment net paid,Amount refunded
 refunds,Refund,refunded_on,date,yes,no,,,,on or after payment date,Refund date
 ledger_entries,LedgerEntry,entry_id,id,yes,yes,,,,pattern LED-<student>-000000,Entry identifier
 ledger_entries,LedgerEntry,student_id,id,yes,no,,,students.student_id,,Student
@@ -131,15 +131,15 @@ ledger_entries,LedgerEntry,posted_on,date,yes,no,,,,,Posting date
 ledger_entries,LedgerEntry,entry_type,text,yes,no,CHARGE|LATE_FEE|SCHOLARSHIP|WAIVER|REVERSAL|PAYMENT|REFUND,,,,Entry type
 ledger_entries,LedgerEntry,source_id,id,yes,no,,,,,"Line, payment or refund behind the entry"
 ledger_entries,LedgerEntry,invoice_id,id,no,no,,,invoices.invoice_id,,Invoice
-ledger_entries,LedgerEntry,amount,money,yes,no,,USD,,,"Signed amount, positive raises what the student owes"
-ledger_entries,LedgerEntry,running_balance,money,yes,no,,USD,,derived,Balance after this entry
+ledger_entries,LedgerEntry,amount,money,yes,no,,INR,,,"Signed amount, positive raises what the student owes"
+ledger_entries,LedgerEntry,running_balance,money,yes,no,,INR,,derived,Balance after this entry
 student_accounts,StudentAccount,student_id,id,yes,yes,,,students.student_id,,Student
-student_accounts,StudentAccount,total_billed,money,yes,no,,USD,,,Charges and late fees
-student_accounts,StudentAccount,total_credits,money,yes,no,,USD,,,"Scholarships, waivers and reversals"
-student_accounts,StudentAccount,total_paid,money,yes,no,,USD,,,Payments received
-student_accounts,StudentAccount,total_refunded,money,yes,no,,USD,,,Refunds paid out
-student_accounts,StudentAccount,unapplied_credit,money,yes,no,,USD,,,Payment money not allocated and not refunded
-student_accounts,StudentAccount,balance,money,yes,no,,USD,,must equal the ledger sum,"Stored balance, positive means the student owes"
+student_accounts,StudentAccount,total_billed,money,yes,no,,INR,,,Charges and late fees
+student_accounts,StudentAccount,total_credits,money,yes,no,,INR,,,"Scholarships, waivers and reversals"
+student_accounts,StudentAccount,total_paid,money,yes,no,,INR,,,Payments received
+student_accounts,StudentAccount,total_refunded,money,yes,no,,INR,,,Refunds paid out
+student_accounts,StudentAccount,unapplied_credit,money,yes,no,,INR,,,Payment money not allocated and not refunded
+student_accounts,StudentAccount,balance,money,yes,no,,INR,,must equal the ledger sum,"Stored balance, positive means the student owes"
 student_accounts,StudentAccount,as_of,date,yes,no,,,,,Snapshot date
 events,Event,event_id,id,yes,yes,,,,pattern EVT-000000000,Event identifier
 events,Event,entity_type,text,yes,no,ENROLLMENT|INVOICE|SCHOLARSHIP|PAYMENT|REFUND,,,,Entity
@@ -155,7 +155,7 @@ decisions,Decision,rule_id,text,yes,no,,,,,Rule applied
 decisions,Decision,entity_type,text,yes,no,,,,,Entity decided on
 decisions,Decision,entity_id,id,yes,no,,,,,Entity identifier
 decisions,Decision,outcome,text,yes,no,,,,,Outcome
-decisions,Decision,amount,money,no,no,,USD,,,Amount involved
+decisions,Decision,amount,money,no,no,,INR,,,Amount involved
 decisions,Decision,decided_on,date,yes,no,,,,,Date
 decisions,Decision,explanation,text,yes,no,,,,,Why
 ground_truth,GroundTruth,issue_id,id,yes,yes,,,,pattern GT-000000,Label identifier
@@ -164,5 +164,5 @@ ground_truth,GroundTruth,entity_type,text,yes,no,,,,,Entity carrying the anomaly
 ground_truth,GroundTruth,entity_id,id,yes,no,,,,,Entity identifier
 ground_truth,GroundTruth,related_ids,text,no,no,,,,,"Related records, pipe separated"
 ground_truth,GroundTruth,expected_decision,text,yes,no,,,,,What a correct system should do
-ground_truth,GroundTruth,expected_value,money,no,no,,USD,,,Correct amount where one applies
+ground_truth,GroundTruth,expected_value,money,no,no,,INR,,,Correct amount where one applies
 ground_truth,GroundTruth,description,text,yes,no,,,,,Plain description

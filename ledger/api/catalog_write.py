@@ -4,7 +4,7 @@ from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from ..db.conn import cents, dollars
+from ..db.conn import paise, rupees
 from ..domain import catalog, ids, rules
 from ..generator.enrollments import context
 from ..services.transactions import counter, lock_reconciled_account
@@ -154,7 +154,7 @@ def issue_invoice(enrollment_id: str, db=Depends(get_db), actor=ADMIN):
     schedules = db.execute("SELECT * FROM fee_schedules WHERE program_id=%s AND term_id=%s",
                            (enr["program_id"], enr["term_id"])).fetchall()
     for schedule in schedules:
-        schedule["rate"] = cents(schedule["rate"])
+        schedule["rate"] = paise(schedule["rate"])
     charges = rules.build_charge_lines(rules.schedule_in_effect(schedules, today), context(student, program, enr["credits"]))
     if not any(c["fee_code"] == "TUITION" for c in charges):
         raise HTTPException(409, "an effective tuition schedule is required")
@@ -167,21 +167,21 @@ def issue_invoice(enrollment_id: str, db=Depends(get_db), actor=ADMIN):
     total = sum(c["amount"] for c in charges)
     db.execute("INSERT INTO invoices VALUES (%s,%s,%s,%s,%s,%s,%s,0,0,%s,0,0,%s,'UNPAID')",
                (invoice_id, enr["student_id"], enrollment_id, enr["term_id"], today, term["due_date"],
-                dollars(total), dollars(total), dollars(total)))
+                rupees(total), rupees(total), rupees(total)))
     seq = db.execute("SELECT count(*) AS n FROM ledger_entries WHERE student_id=%s", (enr["student_id"],)).fetchone()["n"]
     running = account["balance"]
     for no, charge in enumerate(charges, 1):
         line_id = ids.invoice_line_id(invoice_id, no)
-        amount = dollars(charge["amount"])
+        amount = rupees(charge["amount"])
         running += amount
         seq += 1
         db.execute("INSERT INTO invoice_lines VALUES (%s,%s,%s,'CHARGE',%s,%s,%s,%s,%s,NULL,NULL,%s,%s)",
                    (line_id, invoice_id, no, charge["fee_code"], charge["fee_schedule_id"], charge["quantity"],
-                    dollars(charge["unit_amount"]), amount, today, charge["fee_code"]))
+                    rupees(charge["unit_amount"]), amount, today, charge["fee_code"]))
         db.execute("INSERT INTO ledger_entries VALUES (%s,%s,%s,'CHARGE',%s,%s,%s,%s)",
                    (f"LED-{enr['student_id']}-{seq:06d}", enr["student_id"], today, line_id, invoice_id, amount, running))
     db.execute("UPDATE student_accounts SET total_billed=total_billed+%s,balance=%s,as_of=%s WHERE student_id=%s",
-               (dollars(total), running, today, enr["student_id"]))
+               (rupees(total), running, today, enr["student_id"]))
     event(db, "INVOICE", invoice_id, "ISSUED", None, "UNPAID", actor, enrollment_id)
     db.commit()
-    return {"invoice_id": invoice_id, "net_amount": dollars(total)}
+    return {"invoice_id": invoice_id, "net_amount": rupees(total)}

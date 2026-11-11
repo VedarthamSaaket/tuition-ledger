@@ -6,8 +6,8 @@ from .enrollments import context
 APPLY_TO_LIKELY_SCHEME = 0.8
 
 
-def money(cents: int) -> str:
-    return f"{cents / 100:.2f}"
+def money(paise: int) -> str:
+    return f"{paise / 100:.2f}"
 
 
 def award_lines(ds: Dataset, invoice: dict, scheme, scholarship_id: str, splits) -> None:

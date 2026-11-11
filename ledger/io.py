@@ -11,10 +11,10 @@ SQL_TYPES = {"id": "TEXT", "text": "TEXT", "int": "INTEGER", "money": "NUMERIC(1
              "bool": "BOOLEAN", "float": "NUMERIC(5,2)"}
 
 
-def money_text(cents: int) -> str:
-    sign = "-" if cents < 0 else ""
-    cents = abs(cents)
-    return f"{sign}{cents // 100}.{cents % 100:02d}"
+def money_text(paise: int) -> str:
+    sign = "-" if paise < 0 else ""
+    paise = abs(paise)
+    return f"{sign}{paise // 100}.{paise % 100:02d}"
 
 
 def to_text(col_type: str, value) -> str:

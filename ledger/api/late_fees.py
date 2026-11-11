@@ -2,7 +2,7 @@ from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from ..db.conn import cents, dollars
+from ..db.conn import paise, rupees
 from ..domain import ids, rules
 from ..services.transactions import counter, lock_reconciled_account
 from .deps import get_db, require
@@ -22,7 +22,7 @@ def assess_late_fee(invoice_id: str, db=Depends(get_db), actor=ADMIN):
     if db.execute("SELECT 1 FROM invoice_lines WHERE invoice_id=%s AND line_type='LATE_FEE'", (invoice_id,)).fetchone():
         raise HTTPException(409, "late fee already assessed")
     account = lock_reconciled_account(db, inv["student_id"])
-    fee = dollars(rules.late_fee_amount(cents(inv["balance"])))
+    fee = rupees(rules.late_fee_amount(paise(inv["balance"])))
     number = db.execute("SELECT coalesce(max(line_no),0)+1 AS n FROM invoice_lines WHERE invoice_id=%s",
                         (invoice_id,)).fetchone()["n"]
     line_id = ids.invoice_line_id(invoice_id, number)
@@ -42,7 +42,7 @@ def assess_late_fee(invoice_id: str, db=Depends(get_db), actor=ADMIN):
     decision = counter(db, "decision")
     db.execute("INSERT INTO decisions VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
                (f"DEC-{decision:09d}", "RULE-LATE-FEE", "INVOICE", invoice_id, "ASSESSED", fee, today,
-                "1.5 percent of overdue balance, bounded to $25-$150"))
+                "1.5 percent of overdue balance, bounded to INR 25–150"))
     if inv["status"] != "OVERDUE":
         event = counter(db, "event")
         db.execute("INSERT INTO events VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",

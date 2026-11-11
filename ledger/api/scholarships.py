@@ -3,7 +3,7 @@ from datetime import date
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
-from ..db.conn import cents, dollars
+from ..db.conn import paise, rupees
 from ..domain import ids, rules
 from ..domain.catalog import SCHEMES_BY_ID
 from ..generator.awards import net_charges
@@ -51,7 +51,7 @@ def assess(body: Assessment, db=Depends(get_db), actor=ACADEMIC):
         return {"eligibility_id": elg, "eligible": False, "failed": failed}
     lines = db.execute("SELECT * FROM invoice_lines WHERE invoice_id=%s ORDER BY line_no", (body.invoice_id,)).fetchall()
     for line in lines:
-        line["amount"] = cents(line["amount"])
+        line["amount"] = paise(line["amount"])
     award, base, splits = rules.compute_award(scheme, net_charges(lines))
     if award == 0:
         db.commit()
@@ -60,7 +60,7 @@ def assess(body: Assessment, db=Depends(get_db), actor=ACADEMIC):
     sch = ids.scholarship_id(today.year, counter(db, f"scholarship:{today.year}"))
     db.execute("INSERT INTO scholarships VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                (sch, elg, student["student_id"], body.invoice_id, scheme.scheme_id, scheme.award_type,
-                dollars(base), dollars(award), today, "AWARDED"))
+                rupees(base), rupees(award), today, "AWARDED"))
     seq = db.execute("SELECT count(*) AS n FROM ledger_entries WHERE student_id=%s",
                      (student["student_id"],)).fetchone()["n"]
     line_no = max((line["line_no"] for line in lines), default=0)
@@ -69,7 +69,7 @@ def assess(body: Assessment, db=Depends(get_db), actor=ACADEMIC):
         seq += 1
         line_no += 1
         line_id = ids.invoice_line_id(body.invoice_id, line_no)
-        credit = dollars(value)
+        credit = rupees(value)
         running -= credit
         db.execute("INSERT INTO invoice_lines VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                    (line_id, body.invoice_id, line_no, scheme.award_type, charge["fee_code"], None, None, None,
@@ -77,9 +77,9 @@ def assess(body: Assessment, db=Depends(get_db), actor=ACADEMIC):
         db.execute("INSERT INTO ledger_entries VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
                    (f"LED-{student['student_id']}-{seq:06d}", student["student_id"], today, scheme.award_type,
                     line_id, body.invoice_id, -credit, running))
-    amount = dollars(award)
+    amount = rupees(award)
     new_balance = inv["balance"] - amount
-    status = rules.invoice_status({"balance": cents(new_balance), "amount_allocated": cents(inv["amount_allocated"])},
+    status = rules.invoice_status({"balance": paise(new_balance), "amount_allocated": paise(inv["amount_allocated"])},
                                   inv["due_date"], today, False)
     db.execute("UPDATE invoices SET total_credits=total_credits+%s,net_amount=net_amount-%s,balance=%s,status=%s "
                "WHERE invoice_id=%s", (amount, amount, new_balance, status, body.invoice_id))

@@ -1,7 +1,7 @@
 # Data dictionary
 
 Generated from ledger/schema.py by python -m ledger dictionary.
-Money is stored as dollars with two decimals and handled as integer cents in code.
+Money is stored as rupees with two decimals and handled as integer paise in code.
 
 ## Relationships
 
@@ -76,7 +76,7 @@ Primary key is fee_schedule_id.
 - term_id: Term. id; required; references terms.term_id
 - fee_code: Fee code. text; required; one of TECH, LIBRARY, ACTIVITY, LAB, HEALTH_INSURANCE, INTL_SURCHARGE, TUITION
 - basis: Charging basis. text; required; one of PER_CREDIT, FLAT
-- rate: Rate per credit or flat amount. money; required; unit USD
+- rate: Rate per credit or flat amount. money; required; unit INR
 - applies_when: Condition for the fee to be billed. text; required; one of ALL, INTL, FULL_TIME, LAB_PROGRAM, FULL_TIME_NO_COVER
 - version: Schedule version for this program, term and fee. int; required
 - effective_from: First day this rate is in effect. date; required
@@ -110,13 +110,13 @@ Primary key is invoice_id.
 - term_id: Term. id; required; references terms.term_id
 - issue_date: Issue date. date; required
 - due_date: Due date. date; required; after issue_date
-- total_charges: Sum of CHARGE and LATE_FEE lines. money; required; unit USD; derived
-- total_credits: Sum of scholarship and waiver credits. money; required; unit USD; derived
-- total_reversals: Sum of withdrawal and cancellation reversals. money; required; unit USD; derived
-- net_amount: Charges minus credits minus reversals. money; required; unit USD; derived
-- amount_allocated: Payments allocated to the lines. money; required; unit USD; derived
-- amount_refunded: Refunds paid out against this invoice. money; required; unit USD; derived
-- balance: net_amount minus allocated plus refunded. money; required; unit USD; derived
+- total_charges: Sum of CHARGE and LATE_FEE lines. money; required; unit INR; derived
+- total_credits: Sum of scholarship and waiver credits. money; required; unit INR; derived
+- total_reversals: Sum of withdrawal and cancellation reversals. money; required; unit INR; derived
+- net_amount: Charges minus credits minus reversals. money; required; unit INR; derived
+- amount_allocated: Payments allocated to the lines. money; required; unit INR; derived
+- amount_refunded: Refunds paid out against this invoice. money; required; unit INR; derived
+- balance: net_amount minus allocated plus refunded. money; required; unit INR; derived
 - status: Status as of the dataset date. text; required; one of UNPAID, PARTIALLY_PAID, PAID, OVERDUE, IN_CREDIT, CANCELLED; derived
 
 ## InvoiceLine (invoice_lines)
@@ -131,8 +131,8 @@ Primary key is line_id.
 - fee_code: Fee code. text; required; one of TECH, LIBRARY, ACTIVITY, LAB, HEALTH_INSURANCE, INTL_SURCHARGE, TUITION, LATE_FEE
 - fee_schedule_id: Schedule row priced from. id; optional; references fee_schedules.fee_schedule_id; required for CHARGE lines
 - quantity: Credits or 1. int; optional
-- unit_amount: Rate used. money; optional; unit USD
-- amount: Signed amount, charges positive, credits negative. money; required; unit USD
+- unit_amount: Rate used. money; optional; unit INR
+- amount: Signed amount, charges positive, credits negative. money; required; unit INR
 - applies_to_line_id: Charge line a credit or reversal reduces. id; optional; references invoice_lines.line_id
 - scholarship_id: Award behind a credit line. id; optional; references scholarships.scholarship_id
 - posted_on: Date the line was posted. date; required
@@ -147,8 +147,8 @@ Primary key is scheme_id.
 - name: Scheme name. text; required
 - award_type: Scholarship or waiver. text; required; one of SCHOLARSHIP, WAIVER
 - basis: Percent of eligible fees or fixed amount. text; required; one of PERCENT, FIXED
-- value: Percent for PERCENT, cents for FIXED. int; required
-- cap: Maximum award. money; optional; unit USD
+- value: Percent for PERCENT, paise for FIXED. int; required
+- cap: Maximum award. money; optional; unit INR
 - fee_codes: Eligible fee codes, pipe separated. text; required
 - criteria: Readable eligibility criteria. text; required
 
@@ -180,8 +180,8 @@ Primary key is scholarship_id.
 - invoice_id: Invoice credited. id; required; references invoices.invoice_id
 - scheme_id: Scheme. id; required; references scholarship_schemes.scheme_id
 - award_type: Scholarship or waiver. text; required; one of SCHOLARSHIP, WAIVER
-- eligible_fee_base: Eligible fees on the invoice when awarded. money; required; unit USD
-- award_amount: Amount credited. money; required; unit USD; never above eligible_fee_base
+- eligible_fee_base: Eligible fees on the invoice when awarded. money; required; unit INR
+- award_amount: Amount credited. money; required; unit INR; never above eligible_fee_base
 - awarded_on: Award date. date; required
 - status: Award state. text; required; one of AWARDED, CANCELLED
 
@@ -194,11 +194,11 @@ Primary key is payment_id.
 - student_id: Student. id; required; references students.student_id
 - invoice_id: Invoice quoted as reference. id; required; references invoices.invoice_id
 - received_on: Date received. date; required; on or after invoice issue_date
-- amount: Amount received. money; required; unit USD; greater than zero
+- amount: Amount received. money; required; unit INR; greater than zero
 - method: Payment method. text; required; one of CARD, BANK_TRANSFER, SPONSOR, CHEQUE
-- amount_allocated: Allocated to invoice lines. money; required; unit USD; derived
-- amount_unapplied: Held as student credit. money; required; unit USD; derived
-- amount_refunded: Refunded from this payment. money; required; unit USD; derived
+- amount_allocated: Allocated to invoice lines. money; required; unit INR; derived
+- amount_unapplied: Held as student credit. money; required; unit INR; derived
+- amount_refunded: Refunded from this payment. money; required; unit INR; derived
 
 ## PaymentAllocation (payment_allocations)
 
@@ -209,7 +209,7 @@ Primary key is allocation_id.
 - payment_id: Payment. id; required; references payments.payment_id
 - invoice_id: Invoice. id; required; references invoices.invoice_id
 - line_id: Line paid. id; required; references invoice_lines.line_id
-- amount: Amount allocated. money; required; unit USD; greater than zero
+- amount: Amount allocated. money; required; unit INR; greater than zero
 - allocated_on: Allocation date. date; required
 
 ## Refund (refunds)
@@ -222,7 +222,7 @@ Primary key is refund_id.
 - payment_id: Payment refunded from. id; required; references payments.payment_id
 - invoice_id: Invoice for withdrawal or cancellation refunds. id; optional; references invoices.invoice_id
 - reason: Reason. text; required; one of OVERPAYMENT, WITHDRAWAL, CANCELLATION
-- amount: Amount refunded. money; required; unit USD; not above payment net paid
+- amount: Amount refunded. money; required; unit INR; not above payment net paid
 - refunded_on: Refund date. date; required; on or after payment date
 
 ## LedgerEntry (ledger_entries)
@@ -236,8 +236,8 @@ Primary key is entry_id.
 - entry_type: Entry type. text; required; one of CHARGE, LATE_FEE, SCHOLARSHIP, WAIVER, REVERSAL, PAYMENT, REFUND
 - source_id: Line, payment or refund behind the entry. id; required
 - invoice_id: Invoice. id; optional; references invoices.invoice_id
-- amount: Signed amount, positive raises what the student owes. money; required; unit USD
-- running_balance: Balance after this entry. money; required; unit USD; derived
+- amount: Signed amount, positive raises what the student owes. money; required; unit INR
+- running_balance: Balance after this entry. money; required; unit INR; derived
 
 ## StudentAccount (student_accounts)
 
@@ -245,12 +245,12 @@ Stored balance snapshot per student.
 Primary key is student_id.
 
 - student_id: Student. id; required; unique; references students.student_id
-- total_billed: Charges and late fees. money; required; unit USD
-- total_credits: Scholarships, waivers and reversals. money; required; unit USD
-- total_paid: Payments received. money; required; unit USD
-- total_refunded: Refunds paid out. money; required; unit USD
-- unapplied_credit: Payment money not allocated and not refunded. money; required; unit USD
-- balance: Stored balance, positive means the student owes. money; required; unit USD; must equal the ledger sum
+- total_billed: Charges and late fees. money; required; unit INR
+- total_credits: Scholarships, waivers and reversals. money; required; unit INR
+- total_paid: Payments received. money; required; unit INR
+- total_refunded: Refunds paid out. money; required; unit INR
+- unapplied_credit: Payment money not allocated and not refunded. money; required; unit INR
+- balance: Stored balance, positive means the student owes. money; required; unit INR; must equal the ledger sum
 - as_of: Snapshot date. date; required
 
 ## Event (events)
@@ -278,7 +278,7 @@ Primary key is decision_id.
 - entity_type: Entity decided on. text; required
 - entity_id: Entity identifier. id; required
 - outcome: Outcome. text; required
-- amount: Amount involved. money; optional; unit USD
+- amount: Amount involved. money; optional; unit INR
 - decided_on: Date. date; required
 - explanation: Why. text; required
 
@@ -293,5 +293,5 @@ Primary key is issue_id.
 - entity_id: Entity identifier. id; required
 - related_ids: Related records, pipe separated. text; optional
 - expected_decision: What a correct system should do. text; required
-- expected_value: Correct amount where one applies. money; optional; unit USD
+- expected_value: Correct amount where one applies. money; optional; unit INR
 - description: Plain description. text; required

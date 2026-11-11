@@ -2,7 +2,7 @@ from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from ..db.conn import cents, dollars
+from ..db.conn import paise, rupees
 from ..domain import ids, rules
 from ..domain.catalog import PER_CREDIT_CODES
 from ..generator.awards import net_charges
@@ -34,7 +34,7 @@ def withdraw(enrollment_id: str, db=Depends(get_db), actor=ACADEMIC):
     account = lock_reconciled_account(db, inv["student_id"])
     lines = db.execute("SELECT * FROM invoice_lines WHERE invoice_id=%s ORDER BY line_no", (inv["invoice_id"],)).fetchall()
     for line in lines:
-        line["amount"] = cents(line["amount"])
+        line["amount"] = paise(line["amount"])
     charges = net_charges(lines)
     seq = db.execute("SELECT count(*) AS n FROM ledger_entries WHERE student_id=%s",
                      (inv["student_id"],)).fetchone()["n"]
@@ -51,7 +51,7 @@ def withdraw(enrollment_id: str, db=Depends(get_db), actor=ACADEMIC):
         no += 1
         seq += 1
         line_id = ids.invoice_line_id(inv["invoice_id"], no)
-        reversal = dollars(value)
+        reversal = rupees(value)
         running -= reversal
         db.execute("INSERT INTO invoice_lines VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                    (line_id, inv["invoice_id"], no, "REVERSAL", charge["fee_code"], None, None, None,
@@ -59,9 +59,9 @@ def withdraw(enrollment_id: str, db=Depends(get_db), actor=ACADEMIC):
         db.execute("INSERT INTO ledger_entries VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
                    (f"LED-{inv['student_id']}-{seq:06d}", inv["student_id"], today, "REVERSAL", line_id,
                     inv["invoice_id"], -reversal, running))
-    amount = dollars(total)
+    amount = rupees(total)
     invoice_balance = inv["balance"] - amount
-    summary = {"balance": cents(invoice_balance), "amount_allocated": cents(inv["amount_allocated"])}
+    summary = {"balance": paise(invoice_balance), "amount_allocated": paise(inv["amount_allocated"])}
     invoice_status = rules.invoice_status(summary, inv["due_date"], today, cancelled)
     db.execute("UPDATE enrollments SET status=%s,status_on=%s,exit_date=%s,refund_percent=%s WHERE enrollment_id=%s",
                (status, today, today, pct, enrollment_id))

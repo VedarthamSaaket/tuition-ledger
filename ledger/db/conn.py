@@ -18,13 +18,13 @@ def transaction(url: str | None = None):
             yield conn
 
 
-def cents(value) -> int | None:
+def paise(value) -> int | None:
     if value is None:
         return None
     return int((Decimal(value) * 100).to_integral_value())
 
 
-def dollars(value: int | None) -> Decimal | None:
+def rupees(value: int | None) -> Decimal | None:
     if value is None:
         return None
     return Decimal(value) / 100
