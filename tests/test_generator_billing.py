@@ -9,7 +9,7 @@ from ledger.generator.profile import scaled
 
 @lru_cache(maxsize=1)
 def dataset():
-    return build(scaled(0.02, seed=5))
+    return build(scaled(0.02, seed=5), anomalies=False)
 
 
 def test_payment_count_hits_target():
