@@ -1,0 +1,15 @@
+{
+  "command": "python -m ledger generate --profile full --seed 20261022 --formats csv",
+  "runs": 2,
+  "python_hash_seeds": ["1", "2"],
+  "row_counts_equal": true,
+  "files_compared": 19,
+  "files_differing": [],
+  "dataset_sha256_run_1": "4238629b97cc2b8a3d533fc112c1c6400dbaad413064ea2a09e22f3ec63fd004",
+  "dataset_sha256_run_2": "4238629b97cc2b8a3d533fc112c1c6400dbaad413064ea2a09e22f3ec63fd004",
+  "identical": true,
+  "row_counts": {"programs": 20, "terms": 4, "students": 10000, "fee_schedules": 492,
+    "enrollments": 29940, "invoices": 30000, "invoice_lines": 174417, "scholarship_schemes": 7,
+    "eligibility": 32799, "scholarships": 15000, "payments": 50000, "payment_allocations": 140746,
+    "refunds": 2087, "ledger_entries": 226504, "student_accounts": 10000, "events": 220722, "decisions": 61647}
+}
