@@ -259,3 +259,9 @@ GROUND_TRUTH = Table("ground_truth", "GroundTruth", "issue_id", "Labels for inje
 ))
 
 TABLES_BY_NAME = {t.name: t for t in (*TABLES, GROUND_TRUTH)}
+
+LOAD_ORDER = (
+    "programs", "terms", "students", "fee_schedules", "enrollments", "invoices", "scholarship_schemes",
+    "eligibility", "scholarships", "invoice_lines", "payments", "payment_allocations", "refunds",
+    "ledger_entries", "student_accounts", "events", "decisions",
+)

@@ -10,7 +10,7 @@ def label(ds: Dataset, issue_type: str, entity_type: str, entity_id: str, relate
           value: int | None, description: str) -> None:
     ds.ground_truth.append({
         "issue_type": issue_type, "entity_type": entity_type, "entity_id": entity_id,
-        "related_ids": "|".join(related), "expected_decision": decision, "expected_value": value,
+        "related_ids": "|".join(related) or None, "expected_decision": decision, "expected_value": value,
         "description": description,
     })
 
