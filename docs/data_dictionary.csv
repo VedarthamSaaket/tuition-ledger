@@ -1,0 +1,168 @@
+table,entity,field,type,required,unique,allowed_values,unit,foreign_key,validation_rule,description
+programs,Program,program_id,id,yes,yes,,,,pattern PRG-000,Program identifier
+programs,Program,name,text,yes,yes,,,,,Program name
+programs,Program,level,text,yes,no,UG|PG|DIP|CERT,,,,Award level
+programs,Program,department,text,yes,no,STEM|BUSINESS|ARTS|HEALTH,,,,Owning department
+programs,Program,has_lab,bool,yes,no,,,,,Whether the program charges a lab fee
+programs,Program,full_time_credits,int,yes,no,,credits,,"12 for UG and DIP, 9 for PG and CERT",Credits per term that count as full time
+programs,Program,status,text,yes,no,ACTIVE|RETIRED,,,,Program lifecycle state
+terms,Term,term_id,id,yes,yes,,,,pattern TERM-YYYY-SEASON,Term identifier
+terms,Term,name,text,yes,no,,,,,Display name
+terms,Term,season,text,yes,no,FALL|SPRING|SUMMER,,,,Season
+terms,Term,year,int,yes,no,,,,,Calendar year of the term
+terms,Term,invoice_date,date,yes,no,,,,before start_date,Date invoices are issued
+terms,Term,start_date,date,yes,no,,,,,First day of classes
+terms,Term,due_date,date,yes,no,,,,after invoice_date,Payment due date
+terms,Term,end_date,date,yes,no,,,,after start_date,Last day of term
+students,Student,student_id,id,yes,yes,,,,pattern STU-000000,Student identifier
+students,Student,first_name,text,yes,no,,,,,Synthetic first name
+students,Student,last_name,text,yes,no,,,,,Synthetic last name
+students,Student,email,text,yes,yes,,,,,Synthetic email on example.edu
+students,Student,program_id,id,yes,no,,,programs.program_id,,Program the student is admitted to
+students,Student,admit_term_id,id,yes,no,,,terms.term_id,,First term of study
+students,Student,residency,text,yes,no,DOMESTIC|INTL,,,,Fee residency
+students,Student,income_band,text,yes,no,LOW|MEDIUM|HIGH,,,,Household income band for need based aid
+students,Student,gpa,float,yes,no,,0.00 to 4.00,,1.80 to 4.00,Cumulative GPA used for merit rules
+students,Student,has_external_cover,bool,yes,no,,,,,"Has outside health insurance, so health fee does not apply"
+students,Student,staff_dependent,bool,yes,no,,,,,Dependent of a staff member
+students,Student,created_on,date,yes,no,,,,,Record creation date
+fee_schedules,FeeSchedule,fee_schedule_id,id,yes,yes,,,,pattern FS-<program>-<term>-<fee>-V<n>,Fee schedule row identifier
+fee_schedules,FeeSchedule,program_id,id,yes,no,,,programs.program_id,,Program
+fee_schedules,FeeSchedule,term_id,id,yes,no,,,terms.term_id,,Term
+fee_schedules,FeeSchedule,fee_code,text,yes,no,TECH|LIBRARY|ACTIVITY|LAB|HEALTH_INSURANCE|INTL_SURCHARGE|TUITION,,,,Fee code
+fee_schedules,FeeSchedule,basis,text,yes,no,PER_CREDIT|FLAT,,,,Charging basis
+fee_schedules,FeeSchedule,rate,money,yes,no,,USD,,,Rate per credit or flat amount
+fee_schedules,FeeSchedule,applies_when,text,yes,no,ALL|INTL|FULL_TIME|LAB_PROGRAM|FULL_TIME_NO_COVER,,,,Condition for the fee to be billed
+fee_schedules,FeeSchedule,version,int,yes,no,,,,,"Schedule version for this program, term and fee"
+fee_schedules,FeeSchedule,effective_from,date,yes,no,,,,,First day this rate is in effect
+fee_schedules,FeeSchedule,effective_to,date,no,no,,,,"null means open ended, versions never overlap",Last day this rate is in effect
+enrollments,Enrollment,enrollment_id,id,yes,yes,,,,pattern ENR-<student>-<term>,Enrollment identifier
+enrollments,Enrollment,student_id,id,yes,no,,,students.student_id,,Student
+enrollments,Enrollment,program_id,id,yes,no,,,programs.program_id,equals the student program,Program
+enrollments,Enrollment,term_id,id,yes,no,,,terms.term_id,,Term
+enrollments,Enrollment,credits,int,yes,no,,credits,,1 to 18,Credits registered
+enrollments,Enrollment,load,text,yes,no,FULL_TIME|PART_TIME,,,,Load derived from credits
+enrollments,Enrollment,registered_on,date,yes,no,,,,on or before term invoice date,Registration date
+enrollments,Enrollment,status,text,yes,no,REGISTERED|ACTIVE|COMPLETED|WITHDRAWN|CANCELLED,,,,Current lifecycle state
+enrollments,Enrollment,status_on,date,yes,no,,,,,Date of the latest state change
+enrollments,Enrollment,exit_date,date,no,no,,,,,Withdrawal or cancellation date
+enrollments,Enrollment,refund_percent,int,no,no,,%,,,Tuition refund percent applied on exit
+invoices,Invoice,invoice_id,id,yes,yes,,,,pattern INV-STU-000000-YYYY-000000,Invoice identifier
+invoices,Invoice,student_id,id,yes,no,,,students.student_id,,Student
+invoices,Invoice,enrollment_id,id,yes,no,,,enrollments.enrollment_id,,Enrollment billed
+invoices,Invoice,term_id,id,yes,no,,,terms.term_id,,Term
+invoices,Invoice,issue_date,date,yes,no,,,,,Issue date
+invoices,Invoice,due_date,date,yes,no,,,,after issue_date,Due date
+invoices,Invoice,total_charges,money,yes,no,,USD,,derived,Sum of CHARGE and LATE_FEE lines
+invoices,Invoice,total_credits,money,yes,no,,USD,,derived,Sum of scholarship and waiver credits
+invoices,Invoice,total_reversals,money,yes,no,,USD,,derived,Sum of withdrawal and cancellation reversals
+invoices,Invoice,net_amount,money,yes,no,,USD,,derived,Charges minus credits minus reversals
+invoices,Invoice,amount_allocated,money,yes,no,,USD,,derived,Payments allocated to the lines
+invoices,Invoice,amount_refunded,money,yes,no,,USD,,derived,Refunds paid out against this invoice
+invoices,Invoice,balance,money,yes,no,,USD,,derived,net_amount minus allocated plus refunded
+invoices,Invoice,status,text,yes,no,UNPAID|PARTIALLY_PAID|PAID|OVERDUE|IN_CREDIT|CANCELLED,,,derived,Status as of the dataset date
+invoice_lines,InvoiceLine,line_id,id,yes,yes,,,,pattern <invoice>-L00,Line identifier
+invoice_lines,InvoiceLine,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice
+invoice_lines,InvoiceLine,line_no,int,yes,no,,,,,Line number within invoice
+invoice_lines,InvoiceLine,line_type,text,yes,no,CHARGE|SCHOLARSHIP|WAIVER|LATE_FEE|REVERSAL,,,,Line type
+invoice_lines,InvoiceLine,fee_code,text,yes,no,TECH|LIBRARY|ACTIVITY|LAB|HEALTH_INSURANCE|INTL_SURCHARGE|TUITION|LATE_FEE,,,,Fee code
+invoice_lines,InvoiceLine,fee_schedule_id,id,no,no,,,fee_schedules.fee_schedule_id,required for CHARGE lines,Schedule row priced from
+invoice_lines,InvoiceLine,quantity,int,no,no,,,,,Credits or 1
+invoice_lines,InvoiceLine,unit_amount,money,no,no,,USD,,,Rate used
+invoice_lines,InvoiceLine,amount,money,yes,no,,USD,,,"Signed amount, charges positive, credits negative"
+invoice_lines,InvoiceLine,applies_to_line_id,id,no,no,,,invoice_lines.line_id,,Charge line a credit or reversal reduces
+invoice_lines,InvoiceLine,scholarship_id,id,no,no,,,scholarships.scholarship_id,,Award behind a credit line
+invoice_lines,InvoiceLine,posted_on,date,yes,no,,,,,Date the line was posted
+invoice_lines,InvoiceLine,description,text,yes,no,,,,,Human readable reason
+scholarship_schemes,ScholarshipScheme,scheme_id,id,yes,yes,,,,pattern SCHEME-<NAME>,Scheme identifier
+scholarship_schemes,ScholarshipScheme,name,text,yes,no,,,,,Scheme name
+scholarship_schemes,ScholarshipScheme,award_type,text,yes,no,SCHOLARSHIP|WAIVER,,,,Scholarship or waiver
+scholarship_schemes,ScholarshipScheme,basis,text,yes,no,PERCENT|FIXED,,,,Percent of eligible fees or fixed amount
+scholarship_schemes,ScholarshipScheme,value,int,yes,no,,,,,"Percent for PERCENT, cents for FIXED"
+scholarship_schemes,ScholarshipScheme,cap,money,no,no,,USD,,,Maximum award
+scholarship_schemes,ScholarshipScheme,fee_codes,text,yes,no,,,,,"Eligible fee codes, pipe separated"
+scholarship_schemes,ScholarshipScheme,criteria,text,yes,no,,,,,Readable eligibility criteria
+eligibility,Eligibility,eligibility_id,id,yes,yes,,,,pattern ELG-YYYY-000000,Assessment identifier
+eligibility,Eligibility,student_id,id,yes,no,,,students.student_id,,Student
+eligibility,Eligibility,enrollment_id,id,yes,no,,,enrollments.enrollment_id,,Enrollment assessed for
+eligibility,Eligibility,scheme_id,id,yes,no,,,scholarship_schemes.scheme_id,,Scheme applied for
+eligibility,Eligibility,assessed_on,date,yes,no,,,,,Assessment date
+eligibility,Eligibility,gpa,float,yes,no,,,,,GPA at assessment
+eligibility,Eligibility,income_band,text,yes,no,LOW|MEDIUM|HIGH,,,,Income band at assessment
+eligibility,Eligibility,credits,int,yes,no,,,,,Credits at assessment
+eligibility,Eligibility,is_eligible,bool,yes,no,,,,,Rule outcome
+eligibility,Eligibility,passed_criteria,text,no,no,,,,,"Criteria met, pipe separated"
+eligibility,Eligibility,failed_criteria,text,no,no,,,,,"Criteria failed, pipe separated"
+scholarships,Scholarship,scholarship_id,id,yes,yes,,,,pattern SCH-YYYY-000000,Award identifier
+scholarships,Scholarship,eligibility_id,id,yes,yes,,,eligibility.eligibility_id,,Assessment the award came from
+scholarships,Scholarship,student_id,id,yes,no,,,students.student_id,,Student
+scholarships,Scholarship,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice credited
+scholarships,Scholarship,scheme_id,id,yes,no,,,scholarship_schemes.scheme_id,,Scheme
+scholarships,Scholarship,award_type,text,yes,no,SCHOLARSHIP|WAIVER,,,,Scholarship or waiver
+scholarships,Scholarship,eligible_fee_base,money,yes,no,,USD,,,Eligible fees on the invoice when awarded
+scholarships,Scholarship,award_amount,money,yes,no,,USD,,never above eligible_fee_base,Amount credited
+scholarships,Scholarship,awarded_on,date,yes,no,,,,,Award date
+scholarships,Scholarship,status,text,yes,no,AWARDED|CANCELLED,,,,Award state
+payments,Payment,payment_id,id,yes,yes,,,,pattern PAY-YYYY-000000,Payment identifier
+payments,Payment,student_id,id,yes,no,,,students.student_id,,Student
+payments,Payment,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice quoted as reference
+payments,Payment,received_on,date,yes,no,,,,on or after invoice issue_date,Date received
+payments,Payment,amount,money,yes,no,,USD,,greater than zero,Amount received
+payments,Payment,method,text,yes,no,CARD|BANK_TRANSFER|SPONSOR|CHEQUE,,,,Payment method
+payments,Payment,amount_allocated,money,yes,no,,USD,,derived,Allocated to invoice lines
+payments,Payment,amount_unapplied,money,yes,no,,USD,,derived,Held as student credit
+payments,Payment,amount_refunded,money,yes,no,,USD,,derived,Refunded from this payment
+payment_allocations,PaymentAllocation,allocation_id,id,yes,yes,,,,pattern ALLOC-<payment>-00,Allocation identifier
+payment_allocations,PaymentAllocation,payment_id,id,yes,no,,,payments.payment_id,,Payment
+payment_allocations,PaymentAllocation,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice
+payment_allocations,PaymentAllocation,line_id,id,yes,no,,,invoice_lines.line_id,,Line paid
+payment_allocations,PaymentAllocation,amount,money,yes,no,,USD,,greater than zero,Amount allocated
+payment_allocations,PaymentAllocation,allocated_on,date,yes,no,,,,,Allocation date
+refunds,Refund,refund_id,id,yes,yes,,,,pattern REF-YYYY-000000,Refund identifier
+refunds,Refund,student_id,id,yes,no,,,students.student_id,,Student
+refunds,Refund,payment_id,id,yes,no,,,payments.payment_id,,Payment refunded from
+refunds,Refund,invoice_id,id,no,no,,,invoices.invoice_id,,Invoice for withdrawal or cancellation refunds
+refunds,Refund,reason,text,yes,no,OVERPAYMENT|WITHDRAWAL|CANCELLATION,,,,Reason
+refunds,Refund,amount,money,yes,no,,USD,,not above payment net paid,Amount refunded
+refunds,Refund,refunded_on,date,yes,no,,,,on or after payment date,Refund date
+ledger_entries,LedgerEntry,entry_id,id,yes,yes,,,,pattern LED-<student>-000000,Entry identifier
+ledger_entries,LedgerEntry,student_id,id,yes,no,,,students.student_id,,Student
+ledger_entries,LedgerEntry,posted_on,date,yes,no,,,,,Posting date
+ledger_entries,LedgerEntry,entry_type,text,yes,no,CHARGE|LATE_FEE|SCHOLARSHIP|WAIVER|REVERSAL|PAYMENT|REFUND,,,,Entry type
+ledger_entries,LedgerEntry,source_id,id,yes,no,,,,,"Line, payment or refund behind the entry"
+ledger_entries,LedgerEntry,invoice_id,id,no,no,,,invoices.invoice_id,,Invoice
+ledger_entries,LedgerEntry,amount,money,yes,no,,USD,,,"Signed amount, positive raises what the student owes"
+ledger_entries,LedgerEntry,running_balance,money,yes,no,,USD,,derived,Balance after this entry
+student_accounts,StudentAccount,student_id,id,yes,yes,,,students.student_id,,Student
+student_accounts,StudentAccount,total_billed,money,yes,no,,USD,,,Charges and late fees
+student_accounts,StudentAccount,total_credits,money,yes,no,,USD,,,"Scholarships, waivers and reversals"
+student_accounts,StudentAccount,total_paid,money,yes,no,,USD,,,Payments received
+student_accounts,StudentAccount,total_refunded,money,yes,no,,USD,,,Refunds paid out
+student_accounts,StudentAccount,unapplied_credit,money,yes,no,,USD,,,Payment money not allocated and not refunded
+student_accounts,StudentAccount,balance,money,yes,no,,USD,,must equal the ledger sum,"Stored balance, positive means the student owes"
+student_accounts,StudentAccount,as_of,date,yes,no,,,,,Snapshot date
+events,Event,event_id,id,yes,yes,,,,pattern EVT-000000000,Event identifier
+events,Event,entity_type,text,yes,no,ENROLLMENT|INVOICE|SCHOLARSHIP|PAYMENT|REFUND,,,,Entity
+events,Event,entity_id,id,yes,no,,,,,Entity identifier
+events,Event,event_type,text,yes,no,,,,,What happened
+events,Event,from_state,text,no,no,,,,,State before
+events,Event,to_state,text,no,no,,,,,State after
+events,Event,occurred_on,date,yes,no,,,,,Date
+events,Event,actor_role,text,yes,no,learner|instructor|academic_admin|support_staff|platform_admin|system,,,,Who triggered it
+events,Event,detail,text,no,no,,,,,Extra context
+decisions,Decision,decision_id,id,yes,yes,,,,pattern DEC-000000000,Decision identifier
+decisions,Decision,rule_id,text,yes,no,,,,,Rule applied
+decisions,Decision,entity_type,text,yes,no,,,,,Entity decided on
+decisions,Decision,entity_id,id,yes,no,,,,,Entity identifier
+decisions,Decision,outcome,text,yes,no,,,,,Outcome
+decisions,Decision,amount,money,no,no,,USD,,,Amount involved
+decisions,Decision,decided_on,date,yes,no,,,,,Date
+decisions,Decision,explanation,text,yes,no,,,,,Why
+ground_truth,GroundTruth,issue_id,id,yes,yes,,,,pattern GT-000000,Label identifier
+ground_truth,GroundTruth,issue_type,text,yes,no,ALLOCATION_EXCEEDS_PAYMENT|SCHOLARSHIP_EXCEEDS_ELIGIBLE|DUPLICATE_INVOICE|REFUND_EXCEEDS_NET_PAID|BALANCE_LEDGER_MISMATCH,,,,Anomaly type
+ground_truth,GroundTruth,entity_type,text,yes,no,,,,,Entity carrying the anomaly
+ground_truth,GroundTruth,entity_id,id,yes,no,,,,,Entity identifier
+ground_truth,GroundTruth,related_ids,text,no,no,,,,,"Related records, pipe separated"
+ground_truth,GroundTruth,expected_decision,text,yes,no,,,,,What a correct system should do
+ground_truth,GroundTruth,expected_value,money,no,no,,USD,,,Correct amount where one applies
+ground_truth,GroundTruth,description,text,yes,no,,,,,Plain description
