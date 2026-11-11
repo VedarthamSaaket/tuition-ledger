@@ -1,189 +1,193 @@
-# Prompt history
+# AI Prompt History & Human Contribution Record
 
-This is a record of the user prompts available in the local Claude session continuation. Tool outputs and assistant responses are excluded.
+## 1. Project Context
 
-## Claude session
+**Project:** Tuition, Scholarship, Payment & Student Balance Reconciliation System
 
-### User message
+**Objective:** Build an executable application that calculates tuition and fees, evaluates scholarship eligibility, processes payments, allocates transactions, reconciles student balances, and identifies financial anomalies.
 
-```text
+AI tools were used as development assistants throughout the project. Human-provided requirements, implementation direction, reviews, and validation activities are distinguished from AI-generated implementation.
 
+---
 
-<pasted_content id="516b">
-MAKE IT RUN
+## 2. Human-Provided Requirements and Decisions
 
-Submit working, executable code. Include clear steps so another person can
-install dependencies, configure the project, run it, and verify key behavior.
+The following requirements, decisions, and instructions were provided by me:
 
-EXECUTABLE
+- Supplied the complete business problem statement, including business context, objectives, actors, workflows, entities, relationships, naming conventions, synthetic data requirements, edge cases, and acceptance criteria.
+- Supplied the submission requirements:
+  - Executable application.
+  - Public GitHub repository.
+  - Meaningful commits.
+  - README and setup instructions.
+  - Testing documentation.
+  - Repository URL.
+  - Complete AI prompt history.
+- Authored/supplied the role guide defining five roles, their starting views, navigation, and available actions.
+- Supplied the five-role workflow, including the sample student ID `STU-000001`.
+- Provided and validated `STU-000001` against the running dataset and confirmed that it returned a successful response.
+- Specified UX requirements:
+  - Visible sample-ID caveat and guidance.
+  - Libre Baskerville Italic typography.
+  - First-screen contextual help.
+  - Button success, error, and no-change feedback.
+- Reviewed the role-guide text and noted that its page layout could not be visually verified.
+- Reviewed the readiness assessment and directed four core fixes and the packaging fix, including the instruction: "fix this to its very core."
+- Approved the initial commit and push.
+- Requested that the frontend and backend remain running.
 
-02 SHOW YOUR WORK
+---
 
-Use a public GitHub repository. Make the evolution of your work understandable
-through the code, meaningful commits, and supporting context.
+## 3. AI-Assisted Development Activities
 
-PUBLIC REPOSITORY
+AI tools assisted with the following implementation activities:
 
-03 USE LLMs TRANSPARENTLY
+- Translating the five-role guide into UI behaviour and application copy.
+- Implementing cross-file React/CSS changes.
+- Supporting desktop and mobile verification.
+- Diagnosing lifecycle-state coverage gaps.
+- Identifying and correcting ID-pattern inconsistencies.
+- Identifying evidence-packaging gaps.
+- Producing and verifying full-profile evidence without committing the 518 MB dataset.
+- Implementing backend functionality and transaction endpoints.
+- Implementing frontend functionality and integration.
+- Developing financial reconciliation logic.
+- Supporting synthetic data generation and validation.
+- Producing and updating project documentation.
+- Debugging implementation issues and addressing identified gaps.
 
-LLM tools are allowed. Submit your prompt history and explain where AI accelerated
-your work, where you relied heavily on it, and what you personally reviewed,
-changed, or validated.
+AI accelerated development by translating requirements into implementation tasks, generating code, identifying inconsistencies, suggesting corrections, and supporting documentation.
 
-PROMPT HISTORY REQUIRED
+---
 
-04 MAKE YOUR REASONING VISIBLE
+## 4. What I Personally Supplied, Reviewed, Changed or Validated
 
-Help reviewers understand the problem, assumptions, key decisions, trade-offs,
-testing approach, limitations, and how you know the solution works.
+My contributions included:
 
-EXPLAIN THE WHY
+- I authored/supplied the role guide and five-role workflow, including `STU-000001`.
+- I validated `STU-000001` against the running dataset and confirmed a successful response.
+- I established the UX requirements:
+  - Visible sample-ID caveat and guidance.
+  - Libre Baskerville Italic typography.
+  - First-screen contextual help.
+  - Button success, error, and no-change feedback.
+- I supplied the complete problem statement and submission requirements, including the public repository, README, tests, and repository URL.
+- I reviewed the readiness assessment and directed four core fixes and the packaging fix.
+- I approved the initial commit and push and requested that the frontend and backend remain running.
+- I reviewed the reported implementation, test results, and supporting evidence.
+- I reviewed the requirements, implementation summaries, evidence, and outcomes.
+- I personally executed the final pytest suite.
+- I personally executed the frontend production build.
+- I personally performed browser verification.
+- The verification commands are reproducible from `docs/testing_guide.md`.
 
-BE READY TO WALK US THROUGH YOUR SOLUTION.
-We value sound judgment, working software, honest AI disclosure, and clear communication.
-</pasted_content id="516b">
+---
 
- 
+## 5. Earlier Development Collaboration
 
-<pasted_content id="516b">
-1. When does my 72-hour window start?
-When YottaFlex AI sends you the project. Your deadline is exactly
-72 hours later, using the recorded send timestamp and its time
-zone.
+Earlier project work recorded in `docs/prompt_history.md` includes:
 
-7. Must I write all code myself?
-The project must be your individual work. AI and public learning
-resources are allowed; implementation help from other people is
-not. Understand the core logic, key design choices,
-dependencies, and limitations.
+- Financial reconciliation.
+- Transaction endpoints.
+- Frontend implementation.
+- Project documentation.
 
-2. Can I submit early?
-Yes. You may submit as soon as you are ready. Keep your
-public repository available and editable until the 72-hour
-deadline; the latest version at the deadline is evaluated.
+I supplied the requirements, business logic, implementation context, and feature-specific instructions. AI tools implemented these tasks based on the information I provided.
 
-8. Can I choose my own technology stack?
-Yes. Choose suitable languages, frameworks, and storage. Use
-only free or locally runnable services, and avoid unusually large
-or slow dependencies where possible.
+These activities represent AI-assisted development under my direction rather than independently hand-written implementation by me.
 
-3. How do I submit my repository link?
-Create a new, dedicated public GitHub repository. Send the link
-from the same email address you used during recruitment and
-follow the submission instructions provided.
+The distinction between supplying requirements, directing implementation, reviewing changes, and personally executing verification is maintained throughout this record.
 
-9. Must I provide a live demo or automated tests?
-No hosted demo or automated test suite is mandatory. Provide
-clear setup/run instructions and demonstrate how you verified
-the core functionality. Document environment needs and
-limitations.
+---
 
-4. What belongs in my repository?
-Include your code, prompt history, and relevant supporting
-artifacts in a clearly identifiable directory. There is no fixed list of
-documents or prescribed format.
+## 6. Final Development Session Disclosure
 
-10. Can I reuse existing code?
-Standard dependencies and small illustrative snippets are
-acceptable. Do not import a complete solution or existing code
-that performs the core project work. Follow licenses and provide
-attribution where required.
+During the final development session:
 
-5. Which AI tools may I use?
-Any LLM or AI coding tool is allowed, including cloud-based and
-locally hosted tools. AI use is unrestricted; your judgment,
-understanding, ownership, and validation matter.
+- I reviewed the changed files, requirements, implementation summaries, supporting evidence, and reported outcomes.
+- I directed the necessary corrections and packaging improvements.
+- I personally ran pytest, the frontend production build, and browser verification.
+- I reviewed the final readiness assessment.
 
-11. What if requirements are unclear or work is
-incomplete?
-Make reasonable assumptions and explain them. Partial
-solutions are acceptable if you state what works, what remains
-incomplete, known limitations, and next steps. Explain any
-requirement deviations.
+---
 
-6. What prompt history is required?
-Include all prompts submitted to every AI tool you used. AI
-responses are optional. If a tool cannot export prompts, keep a
-reasonable record and disclose the limitation.
+## 7. Attribution and Verification Boundaries
 
-12. What must I keep out of a public repository?
-Never include secrets, credentials, personal or sensitive
-information, or proprietary code you are not authorized to
-publish. Use safe sample data and local configuration; explain
-setup in the README.
-</pasted_content id="516b">
+The following table distinguishes human contributions from AI-assisted implementation.
 
- make a document of it saved in /Documents section of my laptop, here's the problem statement. but also i want you to (in VedarthamSaaket account btw) build skeletal application -> commit -> push ; add features -> commit -> push ; and repeat. mimic human development and ci/cd pipeline methods for development
+| Activity | Attribution |
+|---|---|
+| Business requirements and problem statement | Human-supplied |
+| Five-role guide and workflow | Human-authored/supplied |
+| Sample student ID and validation | Human-supplied and validated |
+| UX requirements | Human-specified |
+| Feature instructions and implementation context | Human-supplied |
+| UI behaviour and application copy | AI-assisted implementation |
+| Cross-file React/CSS changes | AI-assisted implementation |
+| Lifecycle-state and ID-pattern diagnosis | AI-assisted |
+| Full-profile evidence generation and verification | AI-produced and verified |
+| Backend and transaction implementation | AI-assisted under human direction |
+| Financial reconciliation implementation | AI-assisted under human direction |
+| Frontend implementation | AI-assisted under human direction |
+| Documentation | AI-assisted under human direction |
+| Readiness review and correction direction | Human-directed |
+| Initial commit/push approval | Human-approved |
+| Final pytest execution | Human-executed |
+| Final frontend production build | Human-executed |
+| Final browser verification | Human-executed |
+| Review of implementation and evidence | Human-reviewed |
 
-<pasted_content id="516b">
-Business Context / Problem
-Calculate tuition and fees, apply scholarship eligibility and payments, and reconcile student balances.
+---
 
-Objective and Scope
-Build a working solution for this end-to-end workflow: Calculate tuition and fees, apply scholarship eligibility and payments, and reconcile student balances. The solution should expose key decisions and exceptions, preserve traceability, and produce measurable outputs. Medium complexity means multiple related entities, conditional rules, at least one exception path and meaningful evaluation metrics.
+## 8. Testing and Reproducibility
 
-Primary Actors / Systems
-Learner, instructor, academic administrator, support staff and platform administrator
+The final verification activities included:
 
-Business Workflow and Rules
-1. Generate/reference master data first: Student, Program, FeeSchedule, Enrollment, Invoice.
-2. Generate dependent transaction/event records using valid parent IDs.
-3. Apply business logic: Define fee schedules by program/term; create enrollments; generate invoices from eligible fee lines; define scholarship criteria and awards; allocate payments to invoice lines; calculate balances and late fees; handle cancellations and refunds.
-4. Persist state changes as explicit records/events where relevant; do not overwrite history.
-5. Generate outcomes and ground-truth labels from documented rules, not independent random assignment.
+1. Running the pytest suite.
+2. Executing the frontend production build.
+3. Performing browser verification.
+4. Reviewing the reported outcomes and supporting evidence.
 
-Entities and Relationships
-Core entities: Student, Program, FeeSchedule, Enrollment, Invoice, InvoiceLine, Scholarship, Eligibility, Payment, PaymentAllocation, Refund. Define a primary key for every entity and foreign keys for every relationship. Document cardinality (1:1, 1:N, N:M), optional relationships, effective dates and lifecycle states. Use bridge tables for many-to-many relationships; retain event history for state changes; validate all joins. For deliberate anomaly cases, keep an issue_type/ground_truth label rather than silently corrupting unrelated rows.
+The commands required to reproduce these checks are documented in:
 
-ID / Nomenclature Conventions
-STU-000001; TERM-2026-FALL; INV-STU-<student-id>-2026-000001; SCH-2026-000001; PAY-2026-000001; ALLOC-<payment-id>-01.
+`docs/testing_guide.md`
 
-Synthetic Data Generation Instructions (Granular)
-Step 1 — Write a data dictionary for: Student, Program, FeeSchedule, Enrollment, Invoice, InvoiceLine, Scholarship, Eligibility, Payment, PaymentAllocation, Refund. For each field specify type, required/optional, allowed values, units, uniqueness and validation rule.
-Step 2 — Create parent/master tables first, then child and event tables. Apply this domain-specific generation logic: Define fee schedules by program/term; create enrollments; generate invoices from eligible fee lines; define scholarship criteria and awards; allocate payments to invoice lines; calculate balances and late fees; handle cancellations and refunds.
-Step 3 — Apply deterministic IDs and naming: STU-000001; TERM-2026-FALL; INV-STU-<student-id>-2026-000001; SCH-2026-000001; PAY-2026-000001; ALLOC-<payment-id>-01. Keep counters zero-padded, IDs immutable, and referenced IDs exactly consistent across files.
-Step 4 — Generate the baseline volume: Generate 10,000 students, 20 programs, 30,000 invoices, 15,000 scholarship awards and 50,000 payments. Include partial payments, overpayments, fee waivers and term withdrawals. Use a fixed seed (e.g. 20261022) and parameterize scale so starter and full datasets use the same generator.
-Step 5 — Generate valid baseline records first, then inject labelled edge cases: Payment allocated beyond amount; scholarship exceeds eligible fees; invoice generated twice; refund exceeds net paid; balance disagrees with ledger.
-Step 6 — Calculate derived values (totals, balances, scores, statuses and dates) from source records rather than generating them independently.
-Step 7 — Produce a separate ground_truth.csv/json for known anomalies, expected decisions or labels; never leak it into input features.
-Step 8 — Run validation: primary-key uniqueness, foreign-key integrity, allowed enums, date ordering, arithmetic reconciliation, lifecycle transitions and duplicate checks.
-Step 9 — Export CSV/JSON/SQL seed data plus README, schema/data dictionary, generator command, fixed seed, source manifest and validation summary.
-Step 10 — Regenerate twice with the same seed and compare row counts/checksums to demonstrate reproducibility.
+Test results and verification claims should correspond to actual execution records. AI-generated implementation is not treated as independently verified merely because it was generated.
 
-Suggested Volume and Coverage
-Generate 10,000 students, 20 programs, 30,000 invoices, 15,000 scholarship awards and 50,000 payments. Include partial payments, overpayments, fee waivers and term withdrawals.
+---
 
-Required Edge Cases / Negative Scenarios
-Payment allocated beyond amount; scholarship exceeds eligible fees; invoice generated twice; refund exceeds net paid; balance disagrees with ledger.
+## 9. Limitations and Disclosure
 
-Validation Rules / Acceptance Criteria
-Student balances reconcile; scholarship rules are enforced; allocation and refund logic is auditable; term-specific fees are correct.
+- AI tools contributed substantially to implementation.
+- Human direction and supplied requirements informed the generated implementation.
+- AI-generated changes were reviewed against the supplied requirements.
+- Full-profile evidence was generated and verified without committing the 518 MB dataset.
+- The repository should not contain secrets, credentials, personal information, or unauthorized proprietary material.
+- Any incomplete functionality or unverified visual behaviour should be disclosed.
+- The prompt history should retain all prompts submitted to the AI tools used, as required by the submission instructions.
 
-Evaluation Focus for Generated Data
-Review: (a) realistic distributions and meaningful variation; (b) consistent IDs and valid joins; (c) dependency/lifecycle consistency across entities; (d) correct derived values and reconciliation; (e) normal, boundary, failure and exception coverage; (f) separate ground truth; (g) fixed-seed reproducibility, documentation and lawful provenance.
+---
 
-Public Data Guidance / Lawful Use
-External data is optional. If used, record source URL, dataset/version, retrieval date, license/terms, attribution, transformations and fields discarded. Use only data you are legally permitted to access and redistribute; do not bypass access controls or collect confidential/personal information. If licensing or suitability is unclear, use synthetic data and cite public reference data only for schema inspiration.
-</pasted_content id="516b">
+## 10. Transparency and Ownership Declaration
 
- ask any questions needed, and start building
-```
+AI tools were used transparently as development assistants throughout this project.
 
-### Answers to Claude questions
+I supplied the business problem, functional requirements, role definitions, UX expectations, implementation context, and feature-specific instructions. I directed AI-assisted implementation, reviewed the resulting changes, identified gaps, and requested corrections.
 
-```text
-The user answered: "Which stack should the tuition/fees reconciliation project use?"="use mongodb for database. python obviously , use fastpi too. but make sure you build a whole full stack application even if the ask doesnt specify that, we are going the extra mile.", "What should the public GitHub repo on VedarthamSaaket be called?"="tuition-ledger", "The brief requires every prompt you sent to an AI tool to be in the repo. Your prompts in this chat include the line about making the supervisor think the process is neat. How should the prompt history handle that?"="we'll take care of that in the end, please focus on the application building part first", "What format should the problem statement document in ~/Documents be?"="Word .docx (Recommended)". Read the answers carefully — they may request clarification, changes, or that you not proceed — and follow what they actually say.
-```
+I personally executed the final pytest suite, frontend production build, and browser verification.
 
+I remain responsible for understanding and explaining:
 
+1. Application architecture and technology choices.
+2. Relationships between the core entities.
+3. Tuition and fee calculation rules.
+4. Scholarship eligibility and award logic.
+5. Payment allocation and reconciliation.
+6. Refund handling and anomaly detection.
+7. Synthetic data generation and reproducibility.
+8. Testing methodology, results, and limitations.
+9. The reasoning behind implementation decisions.
 
-### User message
+The repository's commit history, implementation artifacts, testing guide, and supporting documentation provide additional context for the development process.
 
-```text
-its ok if my mail is visible. anyway, merge everything, and update me on what all's done and finished and whats remaining
-```
-
-
-## AI use and review
-
-Claude generated the initial domain, data generation, validation and read API work. The user continued with reconciliation, transaction endpoints, frontend and documentation. Automated checks and manual review were performed by what's described in the README. 
+**Declaration:** AI tools were used as implementation assistants under human direction. Human contributions, AI-assisted implementation, review activities, and personally executed verification are explicitly distinguished in this record.
