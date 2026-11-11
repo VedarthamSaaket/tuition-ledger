@@ -21,6 +21,7 @@ class PaymentRequest(BaseModel):
 class RefundRequest(BaseModel):
     payment_id: str
     amount: Decimal = Field(gt=0, max_digits=14, decimal_places=2)
+    reason: Literal["OVERPAYMENT", "WITHDRAWAL", "CANCELLATION"] = "OVERPAYMENT"
 
 
 def counter(db, key):
@@ -90,17 +91,27 @@ def record_payment(body: PaymentRequest, db=Depends(get_db), actor=Depends(get_a
 def refund(body: RefundRequest, db=Depends(get_db), actor=Depends(get_actor)):
     if actor.role not in ("support_staff", "platform_admin"):
         raise HTTPException(403, "not permitted")
-    payment = db.execute("SELECT * FROM payments WHERE payment_id=%s FOR UPDATE", (body.payment_id,)).fetchone()
+    payment = db.execute("SELECT * FROM payments WHERE payment_id=%s", (body.payment_id,)).fetchone()
     if not payment:
         raise HTTPException(404, "payment not found")
+    invoice = db.execute("SELECT * FROM invoices WHERE invoice_id=%s FOR UPDATE", (payment["invoice_id"],)).fetchone()
+    payment = db.execute("SELECT * FROM payments WHERE payment_id=%s FOR UPDATE", (body.payment_id,)).fetchone()
     account = db.execute("SELECT * FROM student_accounts WHERE student_id=%s FOR UPDATE",
                          (payment["student_id"],)).fetchone()
-    available = min(payment["amount"] - payment["amount_refunded"],
-                    payment["amount_unapplied"] - payment["amount_refunded"], account["unapplied_credit"])
+    if body.reason == "OVERPAYMENT":
+        available = min(payment["amount"] - payment["amount_refunded"],
+                        payment["amount_unapplied"] - payment["amount_refunded"], account["unapplied_credit"])
+    else:
+        enrollment = db.execute("SELECT status FROM enrollments WHERE enrollment_id=%s",
+                                (invoice["enrollment_id"],)).fetchone()
+        expected = "WITHDRAWN" if body.reason == "WITHDRAWAL" else "CANCELLED"
+        if enrollment["status"] != expected:
+            raise HTTPException(409, "refund reason does not match enrollment status")
+        available = min(payment["amount"] - payment["amount_refunded"], -invoice["balance"], -account["balance"])
     today = date.today()
     decision = counter(db, "decision")
     approved = body.amount <= available
-    explanation = ("unapplied payment credit available" if approved
+    explanation = ("payment credit available" if approved
                    else f"requested refund exceeds available credit {available}")
     db.execute("INSERT INTO decisions VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
                (f"DEC-{decision:09d}", "RULE-REFUND", "PAYMENT", body.payment_id,
@@ -109,8 +120,9 @@ def refund(body: RefundRequest, db=Depends(get_db), actor=Depends(get_actor)):
         db.commit()
         raise HTTPException(409, explanation)
     refund_id = ids.refund_id(today.year, counter(db, f"refund:{today.year}"))
+    invoice_id = None if body.reason == "OVERPAYMENT" else payment["invoice_id"]
     db.execute("INSERT INTO refunds VALUES (%s,%s,%s,%s,%s,%s,%s)",
-               (refund_id, payment["student_id"], body.payment_id, None, "OVERPAYMENT", body.amount, today))
+               (refund_id, payment["student_id"], body.payment_id, invoice_id, body.reason, body.amount, today))
     db.execute("UPDATE payments SET amount_refunded=amount_refunded+%s WHERE payment_id=%s",
                (body.amount, body.payment_id))
     balance = account["balance"] + body.amount
@@ -118,10 +130,21 @@ def refund(body: RefundRequest, db=Depends(get_db), actor=Depends(get_actor)):
                      (payment["student_id"],)).fetchone()["n"] + 1
     db.execute("INSERT INTO ledger_entries VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
                (f"LED-{payment['student_id']}-{seq:06d}", payment["student_id"], today, "REFUND", refund_id,
-                None, body.amount, balance))
+                invoice_id, body.amount, balance))
     db.execute("UPDATE student_accounts SET total_refunded=total_refunded+%s, unapplied_credit=unapplied_credit-%s, "
                "balance=%s, as_of=%s WHERE student_id=%s",
-               (body.amount, body.amount, balance, today, payment["student_id"]))
+               (body.amount, body.amount if invoice_id is None else 0, balance, today, payment["student_id"]))
+    if invoice_id:
+        invoice_balance = invoice["balance"] + body.amount
+        summary = {"balance": cents(invoice_balance), "amount_allocated": cents(invoice["amount_allocated"])}
+        status = rules.invoice_status(summary, invoice["due_date"], today, body.reason == "CANCELLATION")
+        db.execute("UPDATE invoices SET amount_refunded=amount_refunded+%s,balance=%s,status=%s WHERE invoice_id=%s",
+                   (body.amount, invoice_balance, status, invoice_id))
+        if status != invoice["status"]:
+            event = counter(db, "event")
+            db.execute("INSERT INTO events VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                       (f"EVT-{event:09d}", "INVOICE", invoice_id, "STATUS_CHANGED", invoice["status"], status,
+                        today, actor.role, refund_id))
     event = counter(db, "event")
     db.execute("INSERT INTO events VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                (f"EVT-{event:09d}", "REFUND", refund_id, "ISSUED", None, "ISSUED", today, actor.role, body.payment_id))
