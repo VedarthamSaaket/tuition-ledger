@@ -79,7 +79,6 @@ My contributions included:
 - I personally executed the final pytest suite.
 - I personally executed the frontend production build.
 - I personally performed browser verification.
-- The verification commands are reproducible from `docs/testing_guide.md`.
 
 ---
 
