@@ -1,8 +1,12 @@
+from datetime import date
+
+
 def test_reconciliation_persists_results(client):
     response = client.post('/api/reconciliation/runs')
     assert response.status_code == 200, response.text
     result = response.json()
     assert result['exceptions_found'] > 0
+    assert result['kpis']['as_of'] == date.today().isoformat()
     runs = client.get('/api/reconciliation/runs').json()
     assert any(run['run_id'] == result['run_id'] for run in runs)
     exceptions = client.get(f"/api/reconciliation/runs/{result['run_id']}/exceptions").json()

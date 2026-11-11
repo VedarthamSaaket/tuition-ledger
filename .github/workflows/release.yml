@@ -34,7 +34,7 @@ jobs:
       - run: pip install -r requirements-dev.txt
       - run: ruff check .
       - run: pytest -q
-      - run: npm ci && npm run build
+      - run: npm ci && npm test && npm run build
         working-directory: frontend
       - run: python -m ledger all --profile starter --out data/release
       - run: python -m ledger reproduce --profile starter --report data/release/reproducibility.json

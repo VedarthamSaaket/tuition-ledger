@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from ..db.conn import cents, dollars
 from ..domain import ids, rules
+from ..services.transactions import counter, lock_reconciled_account
 from .deps import get_db, require
-from .payments import counter
 
 router = APIRouter(prefix="/api", tags=["late fees"])
 ADMIN = Depends(require("platform_admin"))
@@ -21,8 +21,7 @@ def assess_late_fee(invoice_id: str, db=Depends(get_db), actor=ADMIN):
         raise HTTPException(409, "invoice is not eligible for a late fee")
     if db.execute("SELECT 1 FROM invoice_lines WHERE invoice_id=%s AND line_type='LATE_FEE'", (invoice_id,)).fetchone():
         raise HTTPException(409, "late fee already assessed")
-    account = db.execute("SELECT * FROM student_accounts WHERE student_id=%s FOR UPDATE",
-                         (inv["student_id"],)).fetchone()
+    account = lock_reconciled_account(db, inv["student_id"])
     fee = dollars(rules.late_fee_amount(cents(inv["balance"])))
     number = db.execute("SELECT coalesce(max(line_no),0)+1 AS n FROM invoice_lines WHERE invoice_id=%s",
                         (invoice_id,)).fetchone()["n"]

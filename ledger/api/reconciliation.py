@@ -1,4 +1,4 @@
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from uuid import uuid4
 
 from fastapi import APIRouter, Depends
@@ -27,7 +27,7 @@ def run(db=Depends(get_db), actor=ADMIN):
         tables[name] = rows
     found = reconcile.detect(tables)
     boundaries = reconcile.boundary_cases(tables, found)
-    kpis = reconcile.kpis(tables)
+    kpis = reconcile.kpis(tables, as_of=date.today())
     run_id = f"RUN-{uuid4()}"
     db.execute("INSERT INTO reconciliation_runs VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
                (run_id, started, datetime.now(UTC), actor.role, len(found), None,

@@ -8,8 +8,8 @@ from ..domain import ids, rules
 from ..domain.catalog import SCHEMES_BY_ID
 from ..generator.awards import net_charges
 from ..generator.enrollments import context
+from ..services.transactions import counter, lock_reconciled_account
 from .deps import get_db, require
-from .payments import counter
 
 router = APIRouter(prefix="/api", tags=["scholarships"])
 ACADEMIC = Depends(require("academic_admin", "platform_admin"))
@@ -56,8 +56,7 @@ def assess(body: Assessment, db=Depends(get_db), actor=ACADEMIC):
     if award == 0:
         db.commit()
         return {"eligibility_id": elg, "eligible": True, "award_amount": 0}
-    account = db.execute("SELECT * FROM student_accounts WHERE student_id=%s FOR UPDATE",
-                         (student["student_id"],)).fetchone()
+    account = lock_reconciled_account(db, student["student_id"])
     sch = ids.scholarship_id(today.year, counter(db, f"scholarship:{today.year}"))
     db.execute("INSERT INTO scholarships VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                (sch, elg, student["student_id"], body.invoice_id, scheme.scheme_id, scheme.award_type,

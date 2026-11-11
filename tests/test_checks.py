@@ -1,4 +1,5 @@
 import copy
+from datetime import date
 from functools import lru_cache
 
 from ledger.checks import reconcile, validate
@@ -86,3 +87,16 @@ def test_broken_foreign_key_fails_cleanly():
     result = validate.run(tables)
     assert result["passed"] is False
     assert statuses(result)["foreign key: refunds.payment_id -> payments.payment_id"] == "FAIL"
+
+
+def test_aging_uses_requested_date_not_stale_invoice_status():
+    tables = copy.deepcopy(dataset(False).tables)
+    for invoice in tables["invoices"]:
+        invoice["status"] = "CANCELLED"
+    invoice = tables["invoices"][0]
+    invoice.update(status="UNPAID", balance=10000, due_date=date(2026, 1, 1))
+    early = reconcile.kpis(tables, as_of=date(2026, 1, 10))
+    late = reconcile.kpis(tables, as_of=date(2026, 4, 15))
+    assert early["overdue_aging"] == {"0-30": 0, "31-60": 0, "61-90": 0, "90+": 0}
+    assert late["overdue_aging"]["90+"] == 100
+    assert late["as_of"] == "2026-04-15"

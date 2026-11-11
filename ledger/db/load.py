@@ -45,7 +45,7 @@ def load_dataset(dataset: Path, url: str | None = None) -> dict[str, int]:
     counts = {}
     with connect(url) as conn:
         with conn.transaction(), conn.cursor() as cur:
-            cur.execute("DROP TABLE IF EXISTS exceptions, reconciliation_runs, id_counters CASCADE")
+            cur.execute("DROP TABLE IF EXISTS exceptions, reconciliation_runs, id_counters, api_idempotency CASCADE")
             cur.execute(schema_sql())
             for name in LOAD_ORDER:
                 copy_csv(cur, name, dataset / "csv" / f"{name}.csv")

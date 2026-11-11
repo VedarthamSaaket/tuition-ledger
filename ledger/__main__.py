@@ -63,6 +63,9 @@ def main() -> None:
     ld.add_argument("dataset", nargs="?", default="data/starter")
     ld.add_argument("--database-url", default=None)
 
+    migrate = sub.add_parser("migrate", help="apply additive application tables and indexes")
+    migrate.add_argument("--database-url", default=None)
+
     a = sub.add_parser("all", help="generate, validate and reconcile in one go")
     add_profile_args(a)
     a.add_argument("--out", default=None)
@@ -81,6 +84,13 @@ def main() -> None:
     elif args.command == "reconcile":
         report = run_reconcile(Path(args.dataset))
         print_reconcile(report)
+    elif args.command == "migrate":
+        from .db.conn import connect
+        from .db.load import APP_SCHEMA
+
+        with connect(args.database_url) as conn:
+            conn.execute(APP_SCHEMA.read_text())
+        print("applied additive application schema")
     elif args.command == "load":
         from .db.load import load_dataset
 

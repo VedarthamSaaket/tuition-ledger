@@ -6,8 +6,8 @@ from ..db.conn import cents, dollars
 from ..domain import ids, rules
 from ..domain.catalog import PER_CREDIT_CODES
 from ..generator.awards import net_charges
+from ..services.transactions import counter, lock_reconciled_account
 from .deps import get_db, require
-from .payments import counter
 
 router = APIRouter(prefix="/api", tags=["enrollment"])
 ACADEMIC = Depends(require("academic_admin", "platform_admin"))
@@ -31,8 +31,7 @@ def withdraw(enrollment_id: str, db=Depends(get_db), actor=ACADEMIC):
     cancelled = today < term["start_date"]
     pct = rules.withdrawal_refund_percent(term["start_date"], today)
     status = "CANCELLED" if cancelled else "WITHDRAWN"
-    account = db.execute("SELECT * FROM student_accounts WHERE student_id=%s FOR UPDATE",
-                         (inv["student_id"],)).fetchone()
+    account = lock_reconciled_account(db, inv["student_id"])
     lines = db.execute("SELECT * FROM invoice_lines WHERE invoice_id=%s ORDER BY line_no", (inv["invoice_id"],)).fetchall()
     for line in lines:
         line["amount"] = cents(line["amount"])

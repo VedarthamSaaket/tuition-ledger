@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+from ..domain import rules
 from ..domain.catalog import AS_OF, ISSUE_TYPES, SCHEMES_BY_ID
 
 DECISIONS = {
@@ -142,20 +143,21 @@ def money(cents: int) -> float:
     return round(cents / 100, 2)
 
 
-def kpis(t: dict) -> dict:
+def kpis(t: dict, as_of=AS_OF) -> dict:
     invoices = t["invoices"]
     billed = sum(i["total_charges"] for i in invoices)
     credits = sum(i["total_credits"] for i in invoices)
     reversals = sum(i["total_reversals"] for i in invoices)
     paid = sum(p["amount"] for p in t["payments"])
     refunded = sum(r["amount"] for r in t["refunds"])
+    net_billed = billed - credits - reversals
     receivable = sum(a["balance"] for a in t["student_accounts"] if a["balance"] > 0)
     credit_owed = -sum(a["balance"] for a in t["student_accounts"] if a["balance"] < 0)
     late = [line for line in t["invoice_lines"] if line["line_type"] == "LATE_FEE"]
     aging = {"0-30": 0, "31-60": 0, "61-90": 0, "90+": 0}
     for i in invoices:
-        if i["status"] == "OVERDUE":
-            days = (AS_OF - i["due_date"]).days
+        if i["status"] != "CANCELLED" and i["balance"] > 0 and as_of >= rules.grace_end(i["due_date"]):
+            days = (as_of - i["due_date"]).days
             key = "0-30" if days <= 30 else "31-60" if days <= 60 else "61-90" if days <= 90 else "90+"
             aging[key] += i["balance"]
     by_scheme = defaultdict(lambda: {"awards": 0, "amount": 0})
@@ -164,19 +166,20 @@ def kpis(t: dict) -> dict:
         by_scheme[s["scheme_id"]]["amount"] += s["award_amount"]
     status_counts = defaultdict(int)
     for i in invoices:
-        status_counts[i["status"]] += 1
+        status = rules.invoice_status(i, i["due_date"], as_of, i["status"] == "CANCELLED")
+        status_counts[status] += 1
     eligible = sum(1 for e in t["eligibility"] if e["is_eligible"])
     return {
-        "as_of": AS_OF.isoformat(),
+        "as_of": as_of.isoformat(),
         "students": len(t["students"]),
         "invoices": len(invoices),
         "total_billed": money(billed),
         "total_scholarships_and_waivers": money(credits),
         "total_reversals": money(reversals),
-        "net_billed": money(billed - credits - reversals),
+        "net_billed": money(net_billed),
         "total_collected": money(paid),
         "total_refunded": money(refunded),
-        "collection_rate": round((paid - refunded) / (billed - credits - reversals), 4) if billed else 0,
+        "collection_rate": round((paid - refunded) / net_billed, 4) if net_billed else 0,
         "outstanding_receivable": money(receivable),
         "credit_balances_owed": money(credit_owed),
         "late_fees_assessed": len(late),

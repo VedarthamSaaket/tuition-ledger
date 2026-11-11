@@ -10,7 +10,7 @@ ROLES = ("learner", "instructor", "academic_admin", "support_staff", "platform_a
 STAFF = ("academic_admin", "support_staff", "platform_admin")
 
 PERMISSIONS = {
-    "learner": ["view own account", "pay own invoices"],
+    "learner": ["view own account"],
     "instructor": ["view programs and fee schedules", "view class rosters"],
     "academic_admin": ["view all accounts", "assess scholarships", "withdraw or cancel enrollments", "view exceptions"],
     "support_staff": ["view all accounts", "record payments", "issue refunds", "view exceptions"],

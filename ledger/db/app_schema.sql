@@ -3,6 +3,14 @@ CREATE TABLE IF NOT EXISTS id_counters (
     value BIGINT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS api_idempotency (
+    operation TEXT NOT NULL,
+    request_key TEXT NOT NULL,
+    request_body JSONB NOT NULL,
+    response_body JSONB NOT NULL,
+    PRIMARY KEY (operation, request_key)
+);
+
 CREATE TABLE IF NOT EXISTS reconciliation_runs (
     run_id TEXT PRIMARY KEY,
     started_at TIMESTAMPTZ NOT NULL,

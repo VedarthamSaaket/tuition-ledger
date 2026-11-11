@@ -1,6 +1,7 @@
 import psycopg
 from fastapi import APIRouter, Depends, HTTPException, Query
 
+from ..domain.catalog import LATE_FEE_GRACE_DAYS
 from .deps import PERMISSIONS, ROSTER_ROLES, STAFF_ONLY, Actor, ensure_student, get_actor, get_db
 
 router = APIRouter(prefix="/api")
@@ -42,8 +43,15 @@ def summary(db=Depends(get_db), actor: Actor = STAFF_ONLY) -> dict:
     net = totals["total_billed"] - totals["total_credits"] - totals["total_reversals"]
     totals["net_billed"] = net
     totals["collection_rate"] = float((totals["total_collected"] - totals["total_refunded"]) / net) if net else 0
-    totals["status_counts"] = {r["status"]: r["n"] for r in rows(
-        db, "SELECT status, count(*) AS n FROM invoices GROUP BY status ORDER BY status")}
+    totals["status_counts"] = {r["status"]: r["n"] for r in rows(db, """
+        SELECT effective_status AS status, count(*) AS n FROM (
+          SELECT CASE WHEN status='CANCELLED' THEN 'CANCELLED'
+                      WHEN balance < 0 THEN 'IN_CREDIT'
+                      WHEN balance = 0 THEN 'PAID'
+                      WHEN CURRENT_DATE >= due_date + %s THEN 'OVERDUE'
+                      WHEN amount_allocated > 0 THEN 'PARTIALLY_PAID'
+                      ELSE 'UNPAID' END AS effective_status FROM invoices
+        ) x GROUP BY effective_status ORDER BY effective_status""", LATE_FEE_GRACE_DAYS)}
     totals["by_term"] = rows(db, """
         SELECT term_id, count(*) AS invoices, sum(net_amount) AS net_billed, sum(amount_allocated) AS collected,
                sum(GREATEST(balance, 0)) AS outstanding
@@ -55,8 +63,9 @@ def summary(db=Depends(get_db), actor: Actor = STAFF_ONLY) -> dict:
     totals["aging"] = rows(db, """
         SELECT CASE WHEN d <= 30 THEN '0-30' WHEN d <= 60 THEN '31-60' WHEN d <= 90 THEN '61-90' ELSE '90+' END
                AS bucket, count(*) AS invoices, sum(balance) AS amount
-        FROM (SELECT balance, (DATE '2026-10-22' - due_date) AS d FROM invoices WHERE status = 'OVERDUE') x
-        GROUP BY 1 ORDER BY 1""")
+        FROM (SELECT balance, (CURRENT_DATE - due_date) AS d FROM invoices
+              WHERE status <> 'CANCELLED' AND balance > 0 AND CURRENT_DATE >= due_date + %s) x
+        GROUP BY 1 ORDER BY 1""", LATE_FEE_GRACE_DAYS)
     return totals
 
 

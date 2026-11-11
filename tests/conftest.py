@@ -1,4 +1,5 @@
 import os
+from uuid import uuid4
 
 import psycopg
 import pytest
@@ -36,4 +37,12 @@ def client(loaded_db, monkeypatch):
     from ledger.api.main import app
 
     monkeypatch.setenv("DATABASE_URL", loaded_db["url"])
-    return TestClient(app)
+    class LedgerTestClient(TestClient):
+        def request(self, method, url, *args, **kwargs):
+            if method.upper() == "POST" and str(url) in ("/api/payments", "/api/refunds"):
+                headers = dict(kwargs.get("headers") or {})
+                headers.setdefault("Idempotency-Key", str(uuid4()))
+                kwargs["headers"] = headers
+            return super().request(method, url, *args, **kwargs)
+
+    return LedgerTestClient(app)

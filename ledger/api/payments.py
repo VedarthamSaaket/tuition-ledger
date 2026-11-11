@@ -2,11 +2,12 @@ from datetime import date
 from decimal import Decimal
 from typing import Literal
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException
 from pydantic import BaseModel, Field
 
 from ..db.conn import cents, dollars
 from ..domain import ids, rules
+from ..services.transactions import counter, lock_reconciled_account, prior_request, save_request
 from .deps import get_actor, get_db
 
 router = APIRouter(prefix="/api", tags=["payments"])
@@ -24,25 +25,22 @@ class RefundRequest(BaseModel):
     reason: Literal["OVERPAYMENT", "WITHDRAWAL", "CANCELLATION"] = "OVERPAYMENT"
 
 
-def counter(db, key):
-    return db.execute("""INSERT INTO id_counters(counter_key,value) VALUES (%s,1)
-        ON CONFLICT(counter_key) DO UPDATE SET value=id_counters.value+1 RETURNING value""", (key,)).fetchone()["value"]
-
-
 @router.post("/payments", status_code=201)
-def record_payment(body: PaymentRequest, db=Depends(get_db), actor=Depends(get_actor)):
+def record_payment(body: PaymentRequest, idempotency_key: str = Header(min_length=16, max_length=128),
+                   db=Depends(get_db), actor=Depends(get_actor)):
     inv = db.execute("SELECT * FROM invoices WHERE invoice_id=%s FOR UPDATE", (body.invoice_id,)).fetchone()
     if inv is None:
         raise HTTPException(404, "invoice not found")
-    if actor.role not in ("support_staff", "platform_admin") and not (
-        actor.role == "learner" and actor.student_id == inv["student_id"]
-    ):
+    if actor.role not in ("support_staff", "platform_admin"):
         raise HTTPException(403, "not permitted")
+    request_body = body.model_dump(mode="json")
+    prior = prior_request(db, "payment", idempotency_key, request_body)
+    if prior is not None:
+        return prior
     today = date.today()
     if today < inv["issue_date"] or inv["status"] == "CANCELLED":
         raise HTTPException(409, "invoice cannot accept payment")
-    account = db.execute("SELECT * FROM student_accounts WHERE student_id=%s FOR UPDATE",
-                         (inv["student_id"],)).fetchone()
+    account = lock_reconciled_account(db, inv["student_id"])
     lines = db.execute("SELECT * FROM invoice_lines WHERE invoice_id=%s", (body.invoice_id,)).fetchall()
     allocations = db.execute("SELECT * FROM payment_allocations WHERE invoice_id=%s", (body.invoice_id,)).fetchall()
     for row in lines + allocations:
@@ -83,21 +81,27 @@ def record_payment(body: PaymentRequest, db=Depends(get_db), actor=Depends(get_a
         db.execute("INSERT INTO events VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                    (f"EVT-{event:09d}", "INVOICE", body.invoice_id, "STATUS_CHANGED", inv["status"], status,
                     today, actor.role, payment_id))
+    result = {"payment_id": payment_id, "allocated": str(dollars(amount - remainder)), "unapplied": str(dollars(remainder))}
+    save_request(db, "payment", idempotency_key, request_body, result)
     db.commit()
-    return {"payment_id": payment_id, "allocated": dollars(amount - remainder), "unapplied": dollars(remainder)}
+    return result
 
 
 @router.post("/refunds", status_code=201)
-def refund(body: RefundRequest, db=Depends(get_db), actor=Depends(get_actor)):
+def refund(body: RefundRequest, idempotency_key: str = Header(min_length=16, max_length=128),
+           db=Depends(get_db), actor=Depends(get_actor)):
     if actor.role not in ("support_staff", "platform_admin"):
         raise HTTPException(403, "not permitted")
+    request_body = body.model_dump(mode="json")
+    prior = prior_request(db, "refund", idempotency_key, request_body)
+    if prior is not None:
+        return prior
     payment = db.execute("SELECT * FROM payments WHERE payment_id=%s", (body.payment_id,)).fetchone()
     if not payment:
         raise HTTPException(404, "payment not found")
     invoice = db.execute("SELECT * FROM invoices WHERE invoice_id=%s FOR UPDATE", (payment["invoice_id"],)).fetchone()
     payment = db.execute("SELECT * FROM payments WHERE payment_id=%s FOR UPDATE", (body.payment_id,)).fetchone()
-    account = db.execute("SELECT * FROM student_accounts WHERE student_id=%s FOR UPDATE",
-                         (payment["student_id"],)).fetchone()
+    account = lock_reconciled_account(db, payment["student_id"])
     if body.reason == "OVERPAYMENT":
         available = min(payment["amount"] - payment["amount_refunded"],
                         payment["amount_unapplied"] - payment["amount_refunded"], account["unapplied_credit"])
@@ -148,5 +152,7 @@ def refund(body: RefundRequest, db=Depends(get_db), actor=Depends(get_actor)):
     event = counter(db, "event")
     db.execute("INSERT INTO events VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                (f"EVT-{event:09d}", "REFUND", refund_id, "ISSUED", None, "ISSUED", today, actor.role, body.payment_id))
+    result = {"refund_id": refund_id, "amount": str(body.amount)}
+    save_request(db, "refund", idempotency_key, request_body, result)
     db.commit()
-    return {"refund_id": refund_id, "amount": body.amount}
+    return result
