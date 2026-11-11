@@ -27,3 +27,13 @@ def loaded_db(tmp_path_factory):
     generate(scaled(0.01, seed=21), out, {"csv"})
     counts = load_dataset(out, url)
     return {"url": url, "dir": out, "counts": counts}
+
+
+@pytest.fixture()
+def client(loaded_db, monkeypatch):
+    from fastapi.testclient import TestClient
+
+    from ledger.api.main import app
+
+    monkeypatch.setenv("DATABASE_URL", loaded_db["url"])
+    return TestClient(app)
