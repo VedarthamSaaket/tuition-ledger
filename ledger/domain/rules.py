@@ -210,7 +210,7 @@ def invoice_status(summary: dict, due: date, as_of: date, cancelled: bool) -> st
         return "IN_CREDIT"
     if summary["balance"] == 0:
         return "PAID"
-    if as_of > grace_end(due):
+    if as_of >= grace_end(due):
         return "OVERDUE"
     if summary["amount_allocated"] > 0:
         return "PARTIALLY_PAID"
