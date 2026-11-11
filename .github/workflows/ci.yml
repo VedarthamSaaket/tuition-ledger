@@ -28,7 +28,7 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - run: python -m ledger generate --profile starter --out data/ci-starter
+      - run: python -m ledger all --profile starter --out data/ci-starter
       - run: python -m ledger reproduce --profile starter --report reproducibility.json
       - uses: actions/upload-artifact@v4
         with:

@@ -105,7 +105,8 @@ def duplicate_invoices(ds: Dataset, n: int) -> None:
         grace = rules.grace_end(original["due_date"])
         if net > 0 and grace <= AS_OF:
             ds.event("INVOICE", new_id, "STATUS_CHANGED", "UNPAID", "OVERDUE", grace, "system", "as of date")
-        label(ds, "DUPLICATE_INVOICE", "INVOICE", new_id, [original["invoice_id"], original["enrollment_id"]],
+        doubled = sorted({line["scholarship_id"] for line in new_lines if line["scholarship_id"]})
+        label(ds, "DUPLICATE_INVOICE", "INVOICE", new_id, [original["invoice_id"], original["enrollment_id"], *doubled],
               "VOID_DUPLICATE", net, f"second invoice for {original['enrollment_id']}, first was {original['invoice_id']}")
 
 
