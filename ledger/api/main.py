@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 
-app = FastAPI(title="Tuition Ledger", version="0.1.0")
+from . import read
+
+app = FastAPI(title="Tuition Ledger", version="0.2.0")
+app.include_router(read.router)
 
 
 @app.get("/api/health")
