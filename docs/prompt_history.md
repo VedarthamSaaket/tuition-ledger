@@ -1,6 +1,6 @@
 # Prompt history
 
-This is a record of the user prompts available in the local Claude session and the later Codex continuation. Tool outputs and assistant responses are excluded. The original Codex handoff included a long pasted transcript; it is represented below by its request and source limitation, not claimed as a verbatim export.
+This is a record of the user prompts available in the local Claude session continuation. Tool outputs and assistant responses are excluded.
 
 ## Claude session
 
@@ -182,10 +182,6 @@ The user answered: "Which stack should the tuition/fees reconciliation project u
 ```text
 its ok if my mail is visible. anyway, merge everything, and update me on what all's done and finished and whats remaining
 ```
-
-## Codex continuation
-
-The first request supplied the assignment and a long partial transcript of the Claude session and asked to continue and create a document of the prompts in Documents. The pasted transcript is incomplete and garbled in places; the Claude messages above were recovered from the local session. The complete original Codex handoff is not available as a local export in this record.
 
 
 ## AI use and review
