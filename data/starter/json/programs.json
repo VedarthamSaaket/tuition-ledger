@@ -1,0 +1,22 @@
+[
+{"program_id":"PRG-001","name":"BSc Computer Science","level":"UG","department":"STEM","has_lab":true,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-002","name":"BSc Data Science","level":"UG","department":"STEM","has_lab":true,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-003","name":"BEng Mechanical Engineering","level":"UG","department":"STEM","has_lab":true,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-004","name":"BSc Biology","level":"UG","department":"STEM","has_lab":true,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-005","name":"BBA Business Administration","level":"UG","department":"BUSINESS","has_lab":false,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-006","name":"BCom Accounting","level":"UG","department":"BUSINESS","has_lab":false,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-007","name":"BA Psychology","level":"UG","department":"ARTS","has_lab":false,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-008","name":"BA English Literature","level":"UG","department":"ARTS","has_lab":false,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-009","name":"BSc Nursing","level":"UG","department":"HEALTH","has_lab":true,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-010","name":"BA Graphic Design","level":"UG","department":"ARTS","has_lab":true,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-011","name":"MSc Artificial Intelligence","level":"PG","department":"STEM","has_lab":true,"full_time_credits":9,"status":"ACTIVE"}
+,{"program_id":"PRG-012","name":"MSc Cybersecurity","level":"PG","department":"STEM","has_lab":false,"full_time_credits":9,"status":"ACTIVE"}
+,{"program_id":"PRG-013","name":"MBA","level":"PG","department":"BUSINESS","has_lab":false,"full_time_credits":9,"status":"ACTIVE"}
+,{"program_id":"PRG-014","name":"MSc Finance","level":"PG","department":"BUSINESS","has_lab":false,"full_time_credits":9,"status":"ACTIVE"}
+,{"program_id":"PRG-015","name":"MPH Public Health","level":"PG","department":"HEALTH","has_lab":false,"full_time_credits":9,"status":"ACTIVE"}
+,{"program_id":"PRG-016","name":"MA Education","level":"PG","department":"ARTS","has_lab":false,"full_time_credits":9,"status":"ACTIVE"}
+,{"program_id":"PRG-017","name":"Diploma in Web Development","level":"DIP","department":"STEM","has_lab":true,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-018","name":"Diploma in Hospitality","level":"DIP","department":"BUSINESS","has_lab":false,"full_time_credits":12,"status":"ACTIVE"}
+,{"program_id":"PRG-019","name":"Certificate in Project Management","level":"CERT","department":"BUSINESS","has_lab":false,"full_time_credits":9,"status":"ACTIVE"}
+,{"program_id":"PRG-020","name":"Certificate in Medical Coding","level":"CERT","department":"HEALTH","has_lab":false,"full_time_credits":9,"status":"ACTIVE"}
+]

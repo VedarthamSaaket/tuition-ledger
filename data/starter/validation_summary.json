@@ -1,0 +1,1080 @@
+{
+  "as_of": "2026-10-22",
+  "checks": 103,
+  "summary": {
+    "PASS": 96,
+    "EXPECTED": 7
+  },
+  "passed": true,
+  "results": [
+    {
+      "check": "primary key unique: programs",
+      "category": "primary_key",
+      "checked": 20,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: terms",
+      "category": "primary_key",
+      "checked": 4,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: students",
+      "category": "primary_key",
+      "checked": 500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: fee_schedules",
+      "category": "primary_key",
+      "checked": 492,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: enrollments",
+      "category": "primary_key",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: invoices",
+      "category": "primary_key",
+      "checked": 1500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: scholarship_schemes",
+      "category": "primary_key",
+      "checked": 7,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: eligibility",
+      "category": "primary_key",
+      "checked": 1666,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: scholarships",
+      "category": "primary_key",
+      "checked": 750,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: invoice_lines",
+      "category": "primary_key",
+      "checked": 8733,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: payments",
+      "category": "primary_key",
+      "checked": 2500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: payment_allocations",
+      "category": "primary_key",
+      "checked": 7017,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: refunds",
+      "category": "primary_key",
+      "checked": 134,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: ledger_entries",
+      "category": "primary_key",
+      "checked": 11367,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: student_accounts",
+      "category": "primary_key",
+      "checked": 500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: events",
+      "category": "primary_key",
+      "checked": 11056,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "primary key unique: decisions",
+      "category": "primary_key",
+      "checked": 3094,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "unique: programs.name",
+      "category": "duplicate",
+      "checked": 20,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: programs.level",
+      "category": "enum",
+      "checked": 20,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: programs.department",
+      "category": "enum",
+      "checked": 20,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: programs.status",
+      "category": "enum",
+      "checked": 20,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: terms.season",
+      "category": "enum",
+      "checked": 4,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "unique: students.email",
+      "category": "duplicate",
+      "checked": 500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: students.program_id -> programs.program_id",
+      "category": "foreign_key",
+      "checked": 500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: students.admit_term_id -> terms.term_id",
+      "category": "foreign_key",
+      "checked": 500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: students.residency",
+      "category": "enum",
+      "checked": 500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: students.income_band",
+      "category": "enum",
+      "checked": 500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: fee_schedules.program_id -> programs.program_id",
+      "category": "foreign_key",
+      "checked": 492,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: fee_schedules.term_id -> terms.term_id",
+      "category": "foreign_key",
+      "checked": 492,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: fee_schedules.fee_code",
+      "category": "enum",
+      "checked": 492,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: fee_schedules.basis",
+      "category": "enum",
+      "checked": 492,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: fee_schedules.applies_when",
+      "category": "enum",
+      "checked": 492,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: enrollments.student_id -> students.student_id",
+      "category": "foreign_key",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: enrollments.program_id -> programs.program_id",
+      "category": "foreign_key",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: enrollments.term_id -> terms.term_id",
+      "category": "foreign_key",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: enrollments.load",
+      "category": "enum",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: enrollments.status",
+      "category": "enum",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: invoices.student_id -> students.student_id",
+      "category": "foreign_key",
+      "checked": 1500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: invoices.enrollment_id -> enrollments.enrollment_id",
+      "category": "foreign_key",
+      "checked": 1500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: invoices.term_id -> terms.term_id",
+      "category": "foreign_key",
+      "checked": 1500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: invoices.status",
+      "category": "enum",
+      "checked": 1500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: scholarship_schemes.award_type",
+      "category": "enum",
+      "checked": 7,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: scholarship_schemes.basis",
+      "category": "enum",
+      "checked": 7,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: eligibility.student_id -> students.student_id",
+      "category": "foreign_key",
+      "checked": 1666,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: eligibility.enrollment_id -> enrollments.enrollment_id",
+      "category": "foreign_key",
+      "checked": 1666,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: eligibility.scheme_id -> scholarship_schemes.scheme_id",
+      "category": "foreign_key",
+      "checked": 1666,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: eligibility.income_band",
+      "category": "enum",
+      "checked": 1666,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: scholarships.eligibility_id -> eligibility.eligibility_id",
+      "category": "foreign_key",
+      "checked": 750,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "unique: scholarships.eligibility_id",
+      "category": "duplicate",
+      "checked": 750,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: scholarships.student_id -> students.student_id",
+      "category": "foreign_key",
+      "checked": 750,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: scholarships.invoice_id -> invoices.invoice_id",
+      "category": "foreign_key",
+      "checked": 750,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: scholarships.scheme_id -> scholarship_schemes.scheme_id",
+      "category": "foreign_key",
+      "checked": 750,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: scholarships.award_type",
+      "category": "enum",
+      "checked": 750,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: scholarships.status",
+      "category": "enum",
+      "checked": 750,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: invoice_lines.invoice_id -> invoices.invoice_id",
+      "category": "foreign_key",
+      "checked": 8733,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: invoice_lines.line_type",
+      "category": "enum",
+      "checked": 8733,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: invoice_lines.fee_code",
+      "category": "enum",
+      "checked": 8733,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: invoice_lines.fee_schedule_id -> fee_schedules.fee_schedule_id",
+      "category": "foreign_key",
+      "checked": 8733,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: invoice_lines.applies_to_line_id -> invoice_lines.line_id",
+      "category": "foreign_key",
+      "checked": 8733,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: invoice_lines.scholarship_id -> scholarships.scholarship_id",
+      "category": "foreign_key",
+      "checked": 8733,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: payments.student_id -> students.student_id",
+      "category": "foreign_key",
+      "checked": 2500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: payments.invoice_id -> invoices.invoice_id",
+      "category": "foreign_key",
+      "checked": 2500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: payments.method",
+      "category": "enum",
+      "checked": 2500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: payment_allocations.payment_id -> payments.payment_id",
+      "category": "foreign_key",
+      "checked": 7017,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: payment_allocations.invoice_id -> invoices.invoice_id",
+      "category": "foreign_key",
+      "checked": 7017,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: payment_allocations.line_id -> invoice_lines.line_id",
+      "category": "foreign_key",
+      "checked": 7017,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: refunds.student_id -> students.student_id",
+      "category": "foreign_key",
+      "checked": 134,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: refunds.payment_id -> payments.payment_id",
+      "category": "foreign_key",
+      "checked": 134,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: refunds.invoice_id -> invoices.invoice_id",
+      "category": "foreign_key",
+      "checked": 134,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: refunds.reason",
+      "category": "enum",
+      "checked": 134,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: ledger_entries.student_id -> students.student_id",
+      "category": "foreign_key",
+      "checked": 11367,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: ledger_entries.entry_type",
+      "category": "enum",
+      "checked": 11367,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: ledger_entries.invoice_id -> invoices.invoice_id",
+      "category": "foreign_key",
+      "checked": 11367,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "foreign key: student_accounts.student_id -> students.student_id",
+      "category": "foreign_key",
+      "checked": 500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: events.entity_type",
+      "category": "enum",
+      "checked": 11056,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allowed values: events.actor_role",
+      "category": "enum",
+      "checked": 11056,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "term calendar order",
+      "category": "date_order",
+      "checked": 4,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "fee schedule effective range",
+      "category": "date_order",
+      "checked": 492,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "invoice issued before due",
+      "category": "date_order",
+      "checked": 1500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "payment on or after invoice issue and not after as of",
+      "category": "date_order",
+      "checked": 2500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "refund on or after payment",
+      "category": "date_order",
+      "checked": 134,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "allocation dated with its payment",
+      "category": "date_order",
+      "checked": 7017,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "enrollment dates inside the term calendar",
+      "category": "date_order",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "invoice totals recompute from lines, allocations and refunds",
+      "category": "arithmetic",
+      "checked": 1500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "charge line amount equals quantity times rate",
+      "category": "arithmetic",
+      "checked": 8733,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "line sign matches line type",
+      "category": "arithmetic",
+      "checked": 8733,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "award equals the sum of its credit lines",
+      "category": "arithmetic",
+      "checked": 750,
+      "failures": 2,
+      "explained_by_ground_truth": 2,
+      "unexplained": 0,
+      "status": "EXPECTED",
+      "sample_failures": [
+        "SCH-2025-000098",
+        "SCH-2025-000107"
+      ]
+    },
+    {
+      "check": "ledger rebuilds exactly from source rows",
+      "category": "arithmetic",
+      "checked": 11367,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "payment allocations do not exceed payment",
+      "category": "reconciliation",
+      "checked": 2500,
+      "failures": 25,
+      "explained_by_ground_truth": 25,
+      "unexplained": 0,
+      "status": "EXPECTED",
+      "sample_failures": [
+        "PAY-2025-000036",
+        "PAY-2025-000178",
+        "PAY-2025-000417",
+        "PAY-2025-000445",
+        "PAY-2025-000620"
+      ]
+    },
+    {
+      "check": "refunds do not exceed net paid",
+      "category": "reconciliation",
+      "checked": 134,
+      "failures": 25,
+      "explained_by_ground_truth": 25,
+      "unexplained": 0,
+      "status": "EXPECTED",
+      "sample_failures": [
+        "REF-2025-000030",
+        "REF-2025-000033",
+        "REF-2025-000031",
+        "REF-2025-000032",
+        "REF-2026-000093"
+      ]
+    },
+    {
+      "check": "stored balance equals ledger",
+      "category": "reconciliation",
+      "checked": 500,
+      "failures": 5,
+      "explained_by_ground_truth": 5,
+      "unexplained": 0,
+      "status": "EXPECTED",
+      "sample_failures": [
+        "STU-000034",
+        "STU-000072",
+        "STU-000083",
+        "STU-000224",
+        "STU-000498"
+      ]
+    },
+    {
+      "check": "term specific fees: charge lines match the schedule in effect on the issue date",
+      "category": "business_rule",
+      "checked": 1500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "eligibility outcome matches the scheme rules",
+      "category": "business_rule",
+      "checked": 1666,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "awards only from eligible assessments",
+      "category": "business_rule",
+      "checked": 750,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "scholarship within eligible fees",
+      "category": "business_rule",
+      "checked": 750,
+      "failures": 8,
+      "explained_by_ground_truth": 8,
+      "unexplained": 0,
+      "status": "EXPECTED",
+      "sample_failures": [
+        "SCH-2026-000012",
+        "SCH-2026-000102",
+        "SCH-2026-000143",
+        "SCH-2026-000244",
+        "SCH-2025-000148"
+      ]
+    },
+    {
+      "check": "late fee policy: one per invoice, bounded, posted at grace end",
+      "category": "business_rule",
+      "checked": 409,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "withdrawal refund percent follows the schedule",
+      "category": "business_rule",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "enrollment transitions are legal",
+      "category": "lifecycle",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "enrollment status equals its last event",
+      "category": "lifecycle",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "invoice transitions are legal",
+      "category": "lifecycle",
+      "checked": 1500,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "invoice status equals its last event",
+      "category": "lifecycle",
+      "checked": 1500,
+      "failures": 29,
+      "explained_by_ground_truth": 29,
+      "unexplained": 0,
+      "status": "EXPECTED",
+      "sample_failures": [
+        "INV-STU-000009-2026-000002",
+        "INV-STU-000085-2026-000002",
+        "INV-STU-000085-2026-000003",
+        "INV-STU-000097-2025-000001",
+        "INV-STU-000117-2026-000001"
+      ]
+    },
+    {
+      "check": "one enrollment per student per term",
+      "category": "duplicate",
+      "checked": 1485,
+      "failures": 0,
+      "explained_by_ground_truth": 0,
+      "unexplained": 0,
+      "status": "PASS",
+      "sample_failures": []
+    },
+    {
+      "check": "one invoice per enrollment",
+      "category": "duplicate",
+      "checked": 1500,
+      "failures": 15,
+      "explained_by_ground_truth": 15,
+      "unexplained": 0,
+      "status": "EXPECTED",
+      "sample_failures": [
+        "INV-STU-000026-2025-000002",
+        "INV-STU-000038-2026-000003",
+        "INV-STU-000070-2026-000003",
+        "INV-STU-000129-2025-000002",
+        "INV-STU-000189-2025-000002"
+      ]
+    }
+  ]
+}

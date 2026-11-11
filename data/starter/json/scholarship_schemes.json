@@ -1,0 +1,9 @@
+[
+{"scheme_id":"SCHEME-MERIT-UG","name":"Undergraduate Merit Award","award_type":"SCHOLARSHIP","basis":"PERCENT","value":25,"cap":3000.0,"fee_codes":"TUITION","criteria":"level in UG and gpa >= 3.5 and full time load"}
+,{"scheme_id":"SCHEME-MERIT-PG","name":"Postgraduate Merit Award","award_type":"SCHOLARSHIP","basis":"PERCENT","value":30,"cap":5000.0,"fee_codes":"TUITION","criteria":"level in PG and gpa >= 3.7"}
+,{"scheme_id":"SCHEME-NEED","name":"Need Based Grant","award_type":"SCHOLARSHIP","basis":"FIXED","value":200000,"cap":null,"fee_codes":"TUITION|TECH|LIBRARY|LAB","criteria":"income in LOW"}
+,{"scheme_id":"SCHEME-STEM","name":"STEM Bursary","award_type":"SCHOLARSHIP","basis":"FIXED","value":150000,"cap":null,"fee_codes":"TUITION","criteria":"gpa >= 3.0 and income in LOW/MEDIUM and department in STEM"}
+,{"scheme_id":"SCHEME-INTL","name":"International Excellence Award","award_type":"SCHOLARSHIP","basis":"PERCENT","value":50,"cap":null,"fee_codes":"INTL_SURCHARGE","criteria":"gpa >= 3.3 and residency in INTL"}
+,{"scheme_id":"SCHEME-WAIVER-HARDSHIP","name":"Hardship Fee Waiver","award_type":"WAIVER","basis":"PERCENT","value":100,"cap":null,"fee_codes":"TECH|ACTIVITY|LIBRARY","criteria":"income in LOW and residency in DOMESTIC"}
+,{"scheme_id":"SCHEME-WAIVER-STAFF","name":"Staff Dependent Tuition Waiver","award_type":"WAIVER","basis":"PERCENT","value":100,"cap":null,"fee_codes":"TUITION","criteria":"staff dependent"}
+]

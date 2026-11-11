@@ -1,0 +1,8 @@
+scheme_id,name,award_type,basis,value,cap,fee_codes,criteria
+SCHEME-MERIT-UG,Undergraduate Merit Award,SCHOLARSHIP,PERCENT,25,3000.00,TUITION,level in UG and gpa >= 3.5 and full time load
+SCHEME-MERIT-PG,Postgraduate Merit Award,SCHOLARSHIP,PERCENT,30,5000.00,TUITION,level in PG and gpa >= 3.7
+SCHEME-NEED,Need Based Grant,SCHOLARSHIP,FIXED,200000,,TUITION|TECH|LIBRARY|LAB,income in LOW
+SCHEME-STEM,STEM Bursary,SCHOLARSHIP,FIXED,150000,,TUITION,gpa >= 3.0 and income in LOW/MEDIUM and department in STEM
+SCHEME-INTL,International Excellence Award,SCHOLARSHIP,PERCENT,50,,INTL_SURCHARGE,gpa >= 3.3 and residency in INTL
+SCHEME-WAIVER-HARDSHIP,Hardship Fee Waiver,WAIVER,PERCENT,100,,TECH|ACTIVITY|LIBRARY,income in LOW and residency in DOMESTIC
+SCHEME-WAIVER-STAFF,Staff Dependent Tuition Waiver,WAIVER,PERCENT,100,,TUITION,staff dependent

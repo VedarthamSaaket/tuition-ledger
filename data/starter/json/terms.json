@@ -1,0 +1,6 @@
+[
+{"term_id":"TERM-2025-FALL","name":"Fall 2025","season":"FALL","year":2025,"invoice_date":"2025-07-25","start_date":"2025-08-25","due_date":"2025-09-01","end_date":"2025-12-12"}
+,{"term_id":"TERM-2026-SPRING","name":"Spring 2026","season":"SPRING","year":2026,"invoice_date":"2025-12-12","start_date":"2026-01-12","due_date":"2026-01-19","end_date":"2026-05-01"}
+,{"term_id":"TERM-2026-SUMMER","name":"Summer 2026","season":"SUMMER","year":2026,"invoice_date":"2026-04-17","start_date":"2026-05-18","due_date":"2026-05-25","end_date":"2026-08-07"}
+,{"term_id":"TERM-2026-FALL","name":"Fall 2026","season":"FALL","year":2026,"invoice_date":"2026-07-24","start_date":"2026-08-24","due_date":"2026-08-31","end_date":"2026-12-11"}
+]

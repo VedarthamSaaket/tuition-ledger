@@ -1,0 +1,21 @@
+program_id,name,level,department,has_lab,full_time_credits,status
+PRG-001,BSc Computer Science,UG,STEM,true,12,ACTIVE
+PRG-002,BSc Data Science,UG,STEM,true,12,ACTIVE
+PRG-003,BEng Mechanical Engineering,UG,STEM,true,12,ACTIVE
+PRG-004,BSc Biology,UG,STEM,true,12,ACTIVE
+PRG-005,BBA Business Administration,UG,BUSINESS,false,12,ACTIVE
+PRG-006,BCom Accounting,UG,BUSINESS,false,12,ACTIVE
+PRG-007,BA Psychology,UG,ARTS,false,12,ACTIVE
+PRG-008,BA English Literature,UG,ARTS,false,12,ACTIVE
+PRG-009,BSc Nursing,UG,HEALTH,true,12,ACTIVE
+PRG-010,BA Graphic Design,UG,ARTS,true,12,ACTIVE
+PRG-011,MSc Artificial Intelligence,PG,STEM,true,9,ACTIVE
+PRG-012,MSc Cybersecurity,PG,STEM,false,9,ACTIVE
+PRG-013,MBA,PG,BUSINESS,false,9,ACTIVE
+PRG-014,MSc Finance,PG,BUSINESS,false,9,ACTIVE
+PRG-015,MPH Public Health,PG,HEALTH,false,9,ACTIVE
+PRG-016,MA Education,PG,ARTS,false,9,ACTIVE
+PRG-017,Diploma in Web Development,DIP,STEM,true,12,ACTIVE
+PRG-018,Diploma in Hospitality,DIP,BUSINESS,false,12,ACTIVE
+PRG-019,Certificate in Project Management,CERT,BUSINESS,false,9,ACTIVE
+PRG-020,Certificate in Medical Coding,CERT,HEALTH,false,9,ACTIVE
