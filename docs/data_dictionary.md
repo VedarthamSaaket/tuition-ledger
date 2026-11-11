@@ -117,7 +117,7 @@ Primary key is invoice_id.
 - amount_allocated: Payments allocated to the lines. money; required; unit INR; derived
 - amount_refunded: Refunds paid out against this invoice. money; required; unit INR; derived
 - balance: net_amount minus allocated plus refunded. money; required; unit INR; derived
-- status: Status as of the dataset date. text; required; one of UNPAID, PARTIALLY_PAID, PAID, OVERDUE, IN_CREDIT, CANCELLED; derived
+- status: Status as of the dataset date. CANCELLED and IN_CREDIT take precedence; PAID when settled; OVERDUE on or after the grace date; PARTIALLY_PAID before grace with an allocation; otherwise UNPAID. text; required; one of UNPAID, PARTIALLY_PAID, PAID, OVERDUE, IN_CREDIT, CANCELLED; derived
 
 ## InvoiceLine (invoice_lines)
 
@@ -205,7 +205,7 @@ Primary key is payment_id.
 Bridge between payments and invoice lines (N to M).
 Primary key is allocation_id.
 
-- allocation_id: Allocation identifier. id; required; unique; pattern ALLOC-<payment>-00
+- allocation_id: Allocation identifier. id; required; unique; pattern ALLOC-<payment>-01
 - payment_id: Payment. id; required; references payments.payment_id
 - invoice_id: Invoice. id; required; references invoices.invoice_id
 - line_id: Line paid. id; required; references invoice_lines.line_id

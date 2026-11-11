@@ -1,7 +1,7 @@
 from collections import defaultdict
 from functools import lru_cache
 
-from ledger.domain.catalog import AS_OF, INVOICE_TRANSITIONS, LATE_FEE_MAX, LATE_FEE_MIN
+from ledger.domain.catalog import AS_OF, INVOICE_TRANSITIONS, LATE_FEE_MAX, LATE_FEE_MIN, TERMS_BY_ID
 from ledger.domain.rules import grace_end
 from ledger.generator.pipeline import build
 from ledger.generator.profile import scaled
@@ -86,9 +86,27 @@ def test_cancelled_invoices_net_to_zero():
 def test_scenarios_are_covered():
     ds = dataset()
     statuses = {i["status"] for i in ds.tables["invoices"]}
-    assert {"PAID", "OVERDUE", "CANCELLED"} <= statuses
+    assert {"PAID", "OVERDUE", "CANCELLED", "UNPAID", "PARTIALLY_PAID"} <= statuses
     reasons = {r["reason"] for r in ds.tables["refunds"]}
     assert {"OVERPAYMENT", "WITHDRAWAL"} <= reasons
     assert any(p["amount_unapplied"] > 0 for p in ds.tables["payments"])
     assert any(i["status"] == "OVERDUE" and i["amount_allocated"] > 0 for i in ds.tables["invoices"])
     assert any(line["line_type"] == "WAIVER" for line in ds.tables["invoice_lines"])
+
+
+def test_early_registration_term_is_before_due_at_snapshot():
+    ds = dataset()
+    term = TERMS_BY_ID["TERM-2027-SPRING"]
+    assert term.invoice_date <= AS_OF < term.due_date
+    future = [i for i in ds.tables["invoices"] if i["term_id"] == term.term_id]
+    assert future
+    assert {i["status"] for i in future} & {"UNPAID", "PARTIALLY_PAID"}
+
+
+def test_no_event_is_recorded_after_the_snapshot():
+    ds = dataset()
+    assert max(e["occurred_on"] for e in ds.tables["events"]) <= AS_OF
+    for e in ds.tables["enrollments"]:
+        if e["term_id"] == "TERM-2027-SPRING" and e["status"] != "CANCELLED":
+            assert e["status"] == "REGISTERED"
+            assert e["status_on"] <= AS_OF

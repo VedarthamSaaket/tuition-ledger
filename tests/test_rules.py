@@ -121,5 +121,6 @@ def test_invoice_summary_and_status():
     assert summary["net_amount"] == 800 and summary["balance"] == 300
     assert rules.line_open_amounts(lines, allocs) == {"A": 300}
     due = date(2026, 8, 31)
+    assert rules.invoice_status(rules.summarize_invoice(lines, [], []), due, date(2026, 9, 1), False) == "UNPAID"
     assert rules.invoice_status(summary, due, date(2026, 9, 1), False) == "PARTIALLY_PAID"
     assert rules.invoice_status(summary, due, date(2026, 10, 1), False) == "OVERDUE"

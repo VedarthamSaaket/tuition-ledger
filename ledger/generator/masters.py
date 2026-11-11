@@ -36,7 +36,8 @@ LAST = ("Patel", "Garcia", "Kim", "Okafor", "Nguyen", "Smith", "Haddad", "Rossi"
         "Mensah", "Novak", "Reddy", "Fischer", "Santos", "Ito", "Murphy", "Ali", "Dubois", "Larsen", "Mehta",
         "Costa", "Brown", "Sato", "Ahmed", "Moreau", "Jensen", "Varga", "Lopez")
 
-TERM_RATE_FACTOR = {"TERM-2025-FALL": 100, "TERM-2026-SPRING": 100, "TERM-2026-SUMMER": 90, "TERM-2026-FALL": 105}
+TERM_RATE_FACTOR = {"TERM-2025-FALL": 100, "TERM-2026-SPRING": 100, "TERM-2026-SUMMER": 90,
+                    "TERM-2026-FALL": 105, "TERM-2027-SPRING": 105}
 FLAT_FEES = {"TECH": 15000, "LIBRARY": 8000, "ACTIVITY": 12000, "LAB": 30000, "HEALTH_INSURANCE": 90000}
 FEE_WHEN = {
     "TUITION": "ALL", "INTL_SURCHARGE": "INTL", "TECH": "ALL", "LIBRARY": "ALL", "ACTIVITY": "FULL_TIME",

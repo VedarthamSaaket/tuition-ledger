@@ -61,11 +61,16 @@ def lifecycle(ds: Dataset, enr: dict) -> None:
     exit_date = None
     if roll < CANCEL_RATE:
         span = (term.start_date - term.invoice_date).days - 1
-        exit_date = term.invoice_date + timedelta(days=rng.randint(1, span))
-        enr.update(status="CANCELLED", status_on=exit_date, exit_date=exit_date, refund_percent=100)
-        ds.event("ENROLLMENT", eid, "CANCELLED", "REGISTERED", "CANCELLED", exit_date, "academic_admin")
-        ds.decision("RULE-WITHDRAWAL-REFUND", "ENROLLMENT", eid, "REFUND_100_PERCENT", exit_date,
-                    "cancelled before the term started so every charge is reversed")
+        candidate = term.invoice_date + timedelta(days=rng.randint(1, span))
+        if candidate <= AS_OF:
+            exit_date = candidate
+            enr.update(status="CANCELLED", status_on=exit_date, exit_date=exit_date, refund_percent=100)
+            ds.event("ENROLLMENT", eid, "CANCELLED", "REGISTERED", "CANCELLED", exit_date, "academic_admin")
+            ds.decision("RULE-WITHDRAWAL-REFUND", "ENROLLMENT", eid, "REFUND_100_PERCENT", exit_date,
+                        "cancelled before the term started so every charge is reversed")
+            return
+    if term.start_date > AS_OF:
+        enr.update(status="REGISTERED", status_on=enr["registered_on"])
         return
     ds.event("ENROLLMENT", eid, "ACTIVATED", "REGISTERED", "ACTIVE", term.start_date)
     if roll < CANCEL_RATE + WITHDRAW_RATE:

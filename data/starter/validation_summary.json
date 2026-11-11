@@ -20,7 +20,7 @@
     {
       "check": "primary key unique: terms",
       "category": "primary_key",
-      "checked": 4,
+      "checked": 5,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -40,7 +40,7 @@
     {
       "check": "primary key unique: fee_schedules",
       "category": "primary_key",
-      "checked": 492,
+      "checked": 620,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -80,7 +80,7 @@
     {
       "check": "primary key unique: eligibility",
       "category": "primary_key",
-      "checked": 1666,
+      "checked": 1642,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -100,7 +100,7 @@
     {
       "check": "primary key unique: invoice_lines",
       "category": "primary_key",
-      "checked": 8733,
+      "checked": 8762,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -120,7 +120,7 @@
     {
       "check": "primary key unique: payment_allocations",
       "category": "primary_key",
-      "checked": 7017,
+      "checked": 7106,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -130,7 +130,7 @@
     {
       "check": "primary key unique: refunds",
       "category": "primary_key",
-      "checked": 134,
+      "checked": 103,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -140,7 +140,7 @@
     {
       "check": "primary key unique: ledger_entries",
       "category": "primary_key",
-      "checked": 11367,
+      "checked": 11365,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -160,7 +160,7 @@
     {
       "check": "primary key unique: events",
       "category": "primary_key",
-      "checked": 11056,
+      "checked": 10348,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -170,7 +170,7 @@
     {
       "check": "primary key unique: decisions",
       "category": "primary_key",
-      "checked": 3094,
+      "checked": 2938,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -220,7 +220,7 @@
     {
       "check": "allowed values: terms.season",
       "category": "enum",
-      "checked": 4,
+      "checked": 5,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -280,7 +280,7 @@
     {
       "check": "foreign key: fee_schedules.program_id -> programs.program_id",
       "category": "foreign_key",
-      "checked": 492,
+      "checked": 620,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -290,7 +290,7 @@
     {
       "check": "foreign key: fee_schedules.term_id -> terms.term_id",
       "category": "foreign_key",
-      "checked": 492,
+      "checked": 620,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -300,7 +300,7 @@
     {
       "check": "allowed values: fee_schedules.fee_code",
       "category": "enum",
-      "checked": 492,
+      "checked": 620,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -310,7 +310,7 @@
     {
       "check": "allowed values: fee_schedules.basis",
       "category": "enum",
-      "checked": 492,
+      "checked": 620,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -320,7 +320,7 @@
     {
       "check": "allowed values: fee_schedules.applies_when",
       "category": "enum",
-      "checked": 492,
+      "checked": 620,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -440,7 +440,7 @@
     {
       "check": "foreign key: eligibility.student_id -> students.student_id",
       "category": "foreign_key",
-      "checked": 1666,
+      "checked": 1642,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -450,7 +450,7 @@
     {
       "check": "foreign key: eligibility.enrollment_id -> enrollments.enrollment_id",
       "category": "foreign_key",
-      "checked": 1666,
+      "checked": 1642,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -460,7 +460,7 @@
     {
       "check": "foreign key: eligibility.scheme_id -> scholarship_schemes.scheme_id",
       "category": "foreign_key",
-      "checked": 1666,
+      "checked": 1642,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -470,7 +470,7 @@
     {
       "check": "allowed values: eligibility.income_band",
       "category": "enum",
-      "checked": 1666,
+      "checked": 1642,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -550,7 +550,7 @@
     {
       "check": "foreign key: invoice_lines.invoice_id -> invoices.invoice_id",
       "category": "foreign_key",
-      "checked": 8733,
+      "checked": 8762,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -560,7 +560,7 @@
     {
       "check": "allowed values: invoice_lines.line_type",
       "category": "enum",
-      "checked": 8733,
+      "checked": 8762,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -570,7 +570,7 @@
     {
       "check": "allowed values: invoice_lines.fee_code",
       "category": "enum",
-      "checked": 8733,
+      "checked": 8762,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -580,7 +580,7 @@
     {
       "check": "foreign key: invoice_lines.fee_schedule_id -> fee_schedules.fee_schedule_id",
       "category": "foreign_key",
-      "checked": 8733,
+      "checked": 8762,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -590,7 +590,7 @@
     {
       "check": "foreign key: invoice_lines.applies_to_line_id -> invoice_lines.line_id",
       "category": "foreign_key",
-      "checked": 8733,
+      "checked": 8762,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -600,7 +600,7 @@
     {
       "check": "foreign key: invoice_lines.scholarship_id -> scholarships.scholarship_id",
       "category": "foreign_key",
-      "checked": 8733,
+      "checked": 8762,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -640,7 +640,7 @@
     {
       "check": "foreign key: payment_allocations.payment_id -> payments.payment_id",
       "category": "foreign_key",
-      "checked": 7017,
+      "checked": 7106,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -650,7 +650,7 @@
     {
       "check": "foreign key: payment_allocations.invoice_id -> invoices.invoice_id",
       "category": "foreign_key",
-      "checked": 7017,
+      "checked": 7106,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -660,7 +660,7 @@
     {
       "check": "foreign key: payment_allocations.line_id -> invoice_lines.line_id",
       "category": "foreign_key",
-      "checked": 7017,
+      "checked": 7106,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -670,7 +670,7 @@
     {
       "check": "foreign key: refunds.student_id -> students.student_id",
       "category": "foreign_key",
-      "checked": 134,
+      "checked": 103,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -680,7 +680,7 @@
     {
       "check": "foreign key: refunds.payment_id -> payments.payment_id",
       "category": "foreign_key",
-      "checked": 134,
+      "checked": 103,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -690,7 +690,7 @@
     {
       "check": "foreign key: refunds.invoice_id -> invoices.invoice_id",
       "category": "foreign_key",
-      "checked": 134,
+      "checked": 103,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -700,7 +700,7 @@
     {
       "check": "allowed values: refunds.reason",
       "category": "enum",
-      "checked": 134,
+      "checked": 103,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -710,7 +710,7 @@
     {
       "check": "foreign key: ledger_entries.student_id -> students.student_id",
       "category": "foreign_key",
-      "checked": 11367,
+      "checked": 11365,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -720,7 +720,7 @@
     {
       "check": "allowed values: ledger_entries.entry_type",
       "category": "enum",
-      "checked": 11367,
+      "checked": 11365,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -730,7 +730,7 @@
     {
       "check": "foreign key: ledger_entries.invoice_id -> invoices.invoice_id",
       "category": "foreign_key",
-      "checked": 11367,
+      "checked": 11365,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -750,7 +750,7 @@
     {
       "check": "allowed values: events.entity_type",
       "category": "enum",
-      "checked": 11056,
+      "checked": 10348,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -760,7 +760,7 @@
     {
       "check": "allowed values: events.actor_role",
       "category": "enum",
-      "checked": 11056,
+      "checked": 10348,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -770,7 +770,7 @@
     {
       "check": "term calendar order",
       "category": "date_order",
-      "checked": 4,
+      "checked": 5,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -780,7 +780,7 @@
     {
       "check": "fee schedule effective range",
       "category": "date_order",
-      "checked": 492,
+      "checked": 620,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -810,7 +810,7 @@
     {
       "check": "refund on or after payment",
       "category": "date_order",
-      "checked": 134,
+      "checked": 103,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -820,7 +820,7 @@
     {
       "check": "allocation dated with its payment",
       "category": "date_order",
-      "checked": 7017,
+      "checked": 7106,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -850,7 +850,7 @@
     {
       "check": "charge line amount equals quantity times rate",
       "category": "arithmetic",
-      "checked": 8733,
+      "checked": 8762,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -860,7 +860,7 @@
     {
       "check": "line sign matches line type",
       "category": "arithmetic",
-      "checked": 8733,
+      "checked": 8762,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -871,19 +871,22 @@
       "check": "award equals the sum of its credit lines",
       "category": "arithmetic",
       "checked": 750,
-      "failures": 2,
-      "explained_by_ground_truth": 2,
+      "failures": 7,
+      "explained_by_ground_truth": 7,
       "unexplained": 0,
       "status": "EXPECTED",
       "sample_failures": [
-        "SCH-2025-000098",
-        "SCH-2025-000107"
+        "SCH-2025-000021",
+        "SCH-2027-000048",
+        "SCH-2025-000072",
+        "SCH-2027-000091",
+        "SCH-2027-000109"
       ]
     },
     {
       "check": "ledger rebuilds exactly from source rows",
       "category": "arithmetic",
-      "checked": 11367,
+      "checked": 11365,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -899,27 +902,27 @@
       "unexplained": 0,
       "status": "EXPECTED",
       "sample_failures": [
-        "PAY-2025-000036",
-        "PAY-2025-000178",
-        "PAY-2025-000417",
-        "PAY-2025-000445",
-        "PAY-2025-000620"
+        "PAY-2025-000020",
+        "PAY-2025-000031",
+        "PAY-2025-000250",
+        "PAY-2025-000304",
+        "PAY-2025-000309"
       ]
     },
     {
       "check": "refunds do not exceed net paid",
       "category": "reconciliation",
-      "checked": 134,
+      "checked": 103,
       "failures": 25,
       "explained_by_ground_truth": 25,
       "unexplained": 0,
       "status": "EXPECTED",
       "sample_failures": [
         "REF-2025-000030",
-        "REF-2025-000033",
-        "REF-2025-000031",
-        "REF-2025-000032",
-        "REF-2026-000093"
+        "REF-2025-000029",
+        "REF-2025-000027",
+        "REF-2025-000028",
+        "REF-2026-000072"
       ]
     },
     {
@@ -931,11 +934,11 @@
       "unexplained": 0,
       "status": "EXPECTED",
       "sample_failures": [
-        "STU-000034",
-        "STU-000072",
-        "STU-000083",
-        "STU-000224",
-        "STU-000498"
+        "STU-000190",
+        "STU-000212",
+        "STU-000390",
+        "STU-000393",
+        "STU-000439"
       ]
     },
     {
@@ -951,7 +954,7 @@
     {
       "check": "eligibility outcome matches the scheme rules",
       "category": "business_rule",
-      "checked": 1666,
+      "checked": 1642,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -977,17 +980,17 @@
       "unexplained": 0,
       "status": "EXPECTED",
       "sample_failures": [
-        "SCH-2026-000012",
-        "SCH-2026-000102",
-        "SCH-2026-000143",
-        "SCH-2026-000244",
-        "SCH-2025-000148"
+        "SCH-2027-000026",
+        "SCH-2025-000050",
+        "SCH-2025-000100",
+        "SCH-2026-000251",
+        "SCH-2026-000255"
       ]
     },
     {
       "check": "late fee policy: one per invoice, bounded, posted at grace end",
       "category": "business_rule",
-      "checked": 409,
+      "checked": 309,
       "failures": 0,
       "explained_by_ground_truth": 0,
       "unexplained": 0,
@@ -1038,16 +1041,16 @@
       "check": "invoice status equals its last event",
       "category": "lifecycle",
       "checked": 1500,
-      "failures": 29,
-      "explained_by_ground_truth": 29,
+      "failures": 27,
+      "explained_by_ground_truth": 27,
       "unexplained": 0,
       "status": "EXPECTED",
       "sample_failures": [
-        "INV-STU-000009-2026-000002",
-        "INV-STU-000085-2026-000002",
-        "INV-STU-000085-2026-000003",
-        "INV-STU-000097-2025-000001",
-        "INV-STU-000117-2026-000001"
+        "INV-STU-000077-2026-000001",
+        "INV-STU-000082-2025-000001",
+        "INV-STU-000137-2026-000001",
+        "INV-STU-000141-2026-000001",
+        "INV-STU-000182-2026-000002"
       ]
     },
     {
@@ -1069,11 +1072,11 @@
       "unexplained": 0,
       "status": "EXPECTED",
       "sample_failures": [
-        "INV-STU-000026-2025-000002",
-        "INV-STU-000038-2026-000003",
-        "INV-STU-000070-2026-000003",
-        "INV-STU-000129-2025-000002",
-        "INV-STU-000189-2025-000002"
+        "INV-STU-000052-2027-000002",
+        "INV-STU-000085-2027-000002",
+        "INV-STU-000119-2026-000003",
+        "INV-STU-000181-2026-000003",
+        "INV-STU-000239-2025-000002"
       ]
     }
   ]

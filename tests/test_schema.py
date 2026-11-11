@@ -1,3 +1,4 @@
+from ledger.domain import ids
 from ledger.schema import TABLES, TABLES_BY_NAME
 
 
@@ -20,3 +21,9 @@ def test_column_types_are_known():
     for table in TABLES:
         for col in table.cols:
             assert col.type in known, (table.name, col.name)
+
+
+def test_allocation_id_pattern_matches_generated_ids():
+    col = TABLES_BY_NAME["payment_allocations"].col("allocation_id")
+    assert col.rule == "pattern ALLOC-<payment>-01"
+    assert ids.allocation_id("PAY-2026-000001", 1) == "ALLOC-PAY-2026-000001-01"

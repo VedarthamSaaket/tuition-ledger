@@ -1,0 +1,236 @@
+{
+  "generator_command": "python -m ledger generate --profile full --seed 20261022",
+  "profile": {
+    "name": "full",
+    "students": 10000,
+    "programs": 20,
+    "invoices": 30000,
+    "scholarships": 15000,
+    "payments": 50000,
+    "seed": 20261022,
+    "anomaly_rate": 0.002
+  },
+  "seed": 20261022,
+  "as_of": "2026-10-22",
+  "anomalies_injected": true,
+  "source": "Fully synthetic. Names come from short hand written lists, emails use example.edu, no external dataset, API or scraped data is used, so there is nothing to license or attribute.",
+  "external_sources": [],
+  "row_counts": {
+    "programs": 20,
+    "terms": 5,
+    "students": 10000,
+    "fee_schedules": 620,
+    "enrollments": 29940,
+    "invoices": 30000,
+    "invoice_lines": 175044,
+    "scholarship_schemes": 7,
+    "eligibility": 32654,
+    "scholarships": 15000,
+    "payments": 50000,
+    "payment_allocations": 143096,
+    "refunds": 1728,
+    "ledger_entries": 226772,
+    "student_accounts": 10000,
+    "events": 207666,
+    "decisions": 58989
+  },
+  "ground_truth_rows": 310,
+  "files": [
+    {
+      "path": "csv/decisions.csv",
+      "bytes": 8430275,
+      "sha256": "f5055a1a99fe5eb5babc1ff3aff1911ffb5b60019accb44df82df2ed5e2e0e3d"
+    },
+    {
+      "path": "csv/eligibility.csv",
+      "bytes": 4397373,
+      "sha256": "8a1c95922bec1db88a8c0f3b0a85a7961f530bb17747cd93c553f82a7b4d608b"
+    },
+    {
+      "path": "csv/enrollments.csv",
+      "bytes": 3379252,
+      "sha256": "3a0783753c815a004714f5cb154131d1dc0fd20422d2dcaa168552d03363a738"
+    },
+    {
+      "path": "csv/events.csv",
+      "bytes": 20616898,
+      "sha256": "32879b54503e397a84890793874018dfeb5cf5939b7b54d8511c2a95d8ad5ab8"
+    },
+    {
+      "path": "csv/fee_schedules.csv",
+      "bytes": 67606,
+      "sha256": "1e987543e417c51df3bf50ef06379c02fc2d634abbe82cc56722fbade1a53a6b"
+    },
+    {
+      "path": "csv/invoice_lines.csv",
+      "bytes": 27624053,
+      "sha256": "344525259814f6d07dc59fb5b83e60c0a5a403bba6c07f22408d8eb054da9309"
+    },
+    {
+      "path": "csv/invoices.csv",
+      "bytes": 4781674,
+      "sha256": "e5bfcda062e0e3cbbade16e34df088af1dba1df1158a33298d6275df6e538e33"
+    },
+    {
+      "path": "csv/ledger_entries.csv",
+      "bytes": 27474652,
+      "sha256": "30936ca8110a15b6a72c4882a7d8ed986a313bdf91291bd8f2739f242f084752"
+    },
+    {
+      "path": "csv/payment_allocations.csv",
+      "bytes": 16761559,
+      "sha256": "72ccc45af3eaba42e923056e8950a214543bfc6c596d8b1e1f22460a2d98ab02"
+    },
+    {
+      "path": "csv/payments.csv",
+      "bytes": 4995901,
+      "sha256": "26c72acc81aad19c1c9d57310ac9aec1e63de1ca0f25f1dd2d94e85d60e6cf27"
+    },
+    {
+      "path": "csv/programs.csv",
+      "bytes": 1121,
+      "sha256": "f982a219e9c6beb91c3fdbb434bcc9cc1ace01fb7e1b058bd5db59fec3eb3878"
+    },
+    {
+      "path": "csv/refunds.csv",
+      "bytes": 146578,
+      "sha256": "830216f1262a980bc3944a0b95196dcb87f2a7901704704826706c6ac7a89126"
+    },
+    {
+      "path": "csv/scholarship_schemes.csv",
+      "bytes": 842,
+      "sha256": "480a87a22952d77f68e9d110157ac6fc78287ee6f3be46a2b73e1da7da4a8efa"
+    },
+    {
+      "path": "csv/scholarships.csv",
+      "bytes": 1963134,
+      "sha256": "2f058cac7a316cd3bdacab1605527279e3d2f07694c85af3850b586c5f244da8"
+    },
+    {
+      "path": "csv/student_accounts.csv",
+      "bytes": 637195,
+      "sha256": "c8509a8be61291454ed06eef070f993ed65735337969651f968e6b85ae3816eb"
+    },
+    {
+      "path": "csv/students.csv",
+      "bytes": 1273472,
+      "sha256": "47f119f84952ee82ca2796f796d25b5fea0e8bcf34e9063d3f8fff7c1485b751"
+    },
+    {
+      "path": "csv/terms.csv",
+      "bytes": 480,
+      "sha256": "5352c22f022aa4d66f2868f5760a799919ec10d427ab8903aa2ef4b29decebcd"
+    },
+    {
+      "path": "ground_truth/ground_truth.csv",
+      "bytes": 56843,
+      "sha256": "60e18ed02147998afb7c2c1770409f6b2710939ee8ba86231c914650d290425a"
+    },
+    {
+      "path": "ground_truth/ground_truth.json",
+      "bytes": 97290,
+      "sha256": "baae96cf4badae70e8701d02365e81077db69c96f8eadf81f217c51ae669529e"
+    },
+    {
+      "path": "json/decisions.json",
+      "bytes": 15158938,
+      "sha256": "05d99d2f98a483c93fe3cb63986f27649d1bbecee58fe8da2186fbbd25963985"
+    },
+    {
+      "path": "json/eligibility.json",
+      "bytes": 10025953,
+      "sha256": "d92141963cca179cda55040e4456d68400c5e909b868866df2e35e9e0a251962"
+    },
+    {
+      "path": "json/enrollments.json",
+      "bytes": 8221838,
+      "sha256": "7ad419c47a27cc79dd6c76fe3f50bed2e7a72b342a9f2fb04ae5983bae05cf70"
+    },
+    {
+      "path": "json/events.json",
+      "bytes": 48213427,
+      "sha256": "ec2844b6eab7a8660deb3952a7ba1df36051bc7caab94b983749d28994472199"
+    },
+    {
+      "path": "json/fee_schedules.json",
+      "bytes": 156745,
+      "sha256": "7e5dd538383b68022da4e68784248c1e1e33e851de7d7fe05289d02c0b585223"
+    },
+    {
+      "path": "json/invoice_lines.json",
+      "bytes": 62013737,
+      "sha256": "12160c2760a0b38d5f4918e2461c20c46dd177192632fab1b99385585c19e080"
+    },
+    {
+      "path": "json/invoices.json",
+      "bytes": 10944756,
+      "sha256": "c68c2c9a56a6fc9bbdf1f7688d59a03dade374c17fba82f81145e14b8cd8c48c"
+    },
+    {
+      "path": "json/ledger_entries.json",
+      "bytes": 53372701,
+      "sha256": "45916938f8120c2318b8bab7ef32062db9066670cc7edc931cd73d74da7734cb"
+    },
+    {
+      "path": "json/payment_allocations.json",
+      "bytes": 29355308,
+      "sha256": "064f2a3b2eb06a2f11c17cdcd24a7e0aace8f5b0ad57e2fed6b81ee17cffacdf"
+    },
+    {
+      "path": "json/payments.json",
+      "bytes": 11798544,
+      "sha256": "210466f16c2ff997597c7398e49ff4fca2a10276c4bec2922088161d8c6b3924"
+    },
+    {
+      "path": "json/programs.json",
+      "bytes": 2918,
+      "sha256": "90387e0bd00b38f37d8c7a0acc0e55ac2bc4c737a174b71b713471a3a5eeb273"
+    },
+    {
+      "path": "json/refunds.json",
+      "bytes": 316253,
+      "sha256": "eff36c1ef48a68a509fa1563d0613f811719a384c070bf2b079f0a8ce4aee36c"
+    },
+    {
+      "path": "json/scholarship_schemes.json",
+      "bytes": 1446,
+      "sha256": "759123bf9d71b5291631c0df7a1def283d8b290ab96affcade9c76d74755ea42"
+    },
+    {
+      "path": "json/scholarships.json",
+      "bytes": 4348246,
+      "sha256": "67e70fa5214487d3762db13ba67ea56288d0c083763b2506d93321df63daaa1c"
+    },
+    {
+      "path": "json/student_accounts.json",
+      "bytes": 1764706,
+      "sha256": "356c4d21959412688133d3baf31d182f826aca390335d0fa699dd2b29851f0c4"
+    },
+    {
+      "path": "json/students.json",
+      "bytes": 3072112,
+      "sha256": "35e0d7c75507ef63bb73dfab100eefc109669b7663db4efea5314dec8ea14ec9"
+    },
+    {
+      "path": "json/terms.json",
+      "bytes": 916,
+      "sha256": "a46629c58d101e8cea7deef912abf9548808c2516fa94ef0ab8998290cd84b37"
+    },
+    {
+      "path": "sql/ground_truth.sql",
+      "bytes": 64244,
+      "sha256": "93b22c06d8106e4b1a91a8c9be45dced605f63680a4530d781dc4b80fe896b7b"
+    },
+    {
+      "path": "sql/schema.sql",
+      "bytes": 10857,
+      "sha256": "ba746b2f3bc2593ebc82996ec4749bb60e5514aa626f9d249a2037106c8574e7"
+    },
+    {
+      "path": "sql/seed.sql",
+      "bytes": 149996737,
+      "sha256": "ab7ac458c2404792303ca6b96892ff865bdec0b476a535b0b2d8a2fda8112f1c"
+    }
+  ],
+  "dataset_sha256": "61f64d1f74b35720e6a1ba90dae87db6a809d8c43ce32c3f86af1a3455bfb3b4"
+}

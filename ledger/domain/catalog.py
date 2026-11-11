@@ -86,6 +86,8 @@ TERMS = (
          date(2026, 4, 17), date(2026, 5, 25)),
     Term("TERM-2026-FALL", "Fall 2026", "FALL", 2026, date(2026, 8, 24), date(2026, 12, 11),
          date(2026, 7, 24), date(2026, 8, 31)),
+    Term("TERM-2027-SPRING", "Spring 2027", "SPRING", 2027, date(2027, 1, 11), date(2027, 5, 1),
+         date(2026, 10, 5), date(2026, 11, 16)),
 )
 TERMS_BY_ID = {t.term_id: t for t in TERMS}
 AS_OF = date(2026, 10, 22)

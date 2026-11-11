@@ -60,7 +60,7 @@ invoices,Invoice,net_amount,money,yes,no,,INR,,derived,Charges minus credits min
 invoices,Invoice,amount_allocated,money,yes,no,,INR,,derived,Payments allocated to the lines
 invoices,Invoice,amount_refunded,money,yes,no,,INR,,derived,Refunds paid out against this invoice
 invoices,Invoice,balance,money,yes,no,,INR,,derived,net_amount minus allocated plus refunded
-invoices,Invoice,status,text,yes,no,UNPAID|PARTIALLY_PAID|PAID|OVERDUE|IN_CREDIT|CANCELLED,,,derived,Status as of the dataset date
+invoices,Invoice,status,text,yes,no,UNPAID|PARTIALLY_PAID|PAID|OVERDUE|IN_CREDIT|CANCELLED,,,derived,Status as of the dataset date. CANCELLED and IN_CREDIT take precedence; PAID when settled; OVERDUE on or after the grace date; PARTIALLY_PAID before grace with an allocation; otherwise UNPAID
 invoice_lines,InvoiceLine,line_id,id,yes,yes,,,,pattern <invoice>-L00,Line identifier
 invoice_lines,InvoiceLine,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice
 invoice_lines,InvoiceLine,line_no,int,yes,no,,,,,Line number within invoice
@@ -112,7 +112,7 @@ payments,Payment,method,text,yes,no,CARD|BANK_TRANSFER|SPONSOR|CHEQUE,,,,Payment
 payments,Payment,amount_allocated,money,yes,no,,INR,,derived,Allocated to invoice lines
 payments,Payment,amount_unapplied,money,yes,no,,INR,,derived,Held as student credit
 payments,Payment,amount_refunded,money,yes,no,,INR,,derived,Refunded from this payment
-payment_allocations,PaymentAllocation,allocation_id,id,yes,yes,,,,pattern ALLOC-<payment>-00,Allocation identifier
+payment_allocations,PaymentAllocation,allocation_id,id,yes,yes,,,,pattern ALLOC-<payment>-01,Allocation identifier
 payment_allocations,PaymentAllocation,payment_id,id,yes,no,,,payments.payment_id,,Payment
 payment_allocations,PaymentAllocation,invoice_id,id,yes,no,,,invoices.invoice_id,,Invoice
 payment_allocations,PaymentAllocation,line_id,id,yes,no,,,invoice_lines.line_id,,Line paid

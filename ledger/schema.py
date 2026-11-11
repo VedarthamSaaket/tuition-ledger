@@ -112,7 +112,12 @@ TABLES = (
         Col("amount_allocated", "money", "Payments allocated to the lines", unit="INR", rule="derived"),
         Col("amount_refunded", "money", "Refunds paid out against this invoice", unit="INR", rule="derived"),
         Col("balance", "money", "net_amount minus allocated plus refunded", unit="INR", rule="derived"),
-        Col("status", "text", "Status as of the dataset date", allowed=INVOICE_STATUS, rule="derived"),
+        Col(
+            "status", "text",
+            "Status as of the dataset date. CANCELLED and IN_CREDIT take precedence; PAID when settled; "
+            "OVERDUE on or after the grace date; PARTIALLY_PAID before grace with an allocation; otherwise UNPAID",
+            allowed=INVOICE_STATUS, rule="derived",
+        ),
     )),
     Table("invoice_lines", "InvoiceLine", "line_id", "Charges and credits on an invoice. Never edited.", (
         pk("line_id", "<invoice>-L00", "Line identifier"),
@@ -183,7 +188,7 @@ TABLES = (
     )),
     Table("payment_allocations", "PaymentAllocation", "allocation_id",
           "Bridge between payments and invoice lines (N to M).", (
-        pk("allocation_id", "ALLOC-<payment>-00", "Allocation identifier"),
+        pk("allocation_id", "ALLOC-<payment>-01", "Allocation identifier"),
         Col("payment_id", "id", "Payment", fk="payments.payment_id"),
         Col("invoice_id", "id", "Invoice", fk="invoices.invoice_id"),
         Col("line_id", "id", "Line paid", fk="invoice_lines.line_id"),

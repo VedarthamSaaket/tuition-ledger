@@ -31,7 +31,7 @@ def rows():
 def write(out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     with open(out_dir / "data_dictionary.csv", "w", newline="") as fh:
-        writer = csv.writer(fh)
+        writer = csv.writer(fh, lineterminator="\n")
         writer.writerow(["table", "entity", "field", "type", "required", "unique", "allowed_values",
                          "unit", "foreign_key", "validation_rule", "description"])
         for table, col in rows():

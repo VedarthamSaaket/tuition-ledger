@@ -1,5 +1,6 @@
 import json
 
+from ledger import dictionary
 from ledger.generate import generate
 from ledger.generator.pipeline import build
 from ledger.generator.profile import scaled
@@ -37,3 +38,9 @@ def test_schema_sql_creates_every_table():
     sql = schema_sql()
     for name in LOAD_ORDER:
         assert f"CREATE TABLE {name} (" in sql
+
+
+def test_dictionary_writes_lf_line_endings(tmp_path):
+    dictionary.write(tmp_path)
+    assert b"\r\n" not in (tmp_path / "data_dictionary.csv").read_bytes()
+    assert "## PaymentAllocation (payment_allocations)" in (tmp_path / "data_dictionary.md").read_text()

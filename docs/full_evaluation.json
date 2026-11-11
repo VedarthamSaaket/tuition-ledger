@@ -1,0 +1,156 @@
+{
+  "detection": {
+    "overall": {
+      "labelled": 310,
+      "detected": 310,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "per_type": {
+      "ALLOCATION_EXCEEDS_PAYMENT": {
+        "labelled": 100,
+        "detected": 100,
+        "true_positive": 100,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "SCHOLARSHIP_EXCEEDS_ELIGIBLE": {
+        "labelled": 30,
+        "detected": 30,
+        "true_positive": 30,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "DUPLICATE_INVOICE": {
+        "labelled": 60,
+        "detected": 60,
+        "true_positive": 60,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "REFUND_EXCEEDS_NET_PAID": {
+        "labelled": 100,
+        "detected": 100,
+        "true_positive": 100,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "BALANCE_LEDGER_MISMATCH": {
+        "labelled": 20,
+        "detected": 20,
+        "true_positive": 20,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      }
+    }
+  },
+  "boundary_cases": {
+    "payments_allocated_to_the_cent": {
+      "count": 48149,
+      "wrongly_flagged": 0
+    },
+    "awards_equal_to_eligible_fees": {
+      "count": 4828,
+      "wrongly_flagged": 0
+    },
+    "refunds_equal_to_remaining_net_paid": {
+      "count": 803,
+      "wrongly_flagged": 0
+    },
+    "credit_refunds_split_across_payments": {
+      "count": 113
+    },
+    "payments_with_unapplied_credit": {
+      "count": 1751
+    }
+  },
+  "kpis": {
+    "as_of": "2026-10-22",
+    "students": 10000,
+    "invoices": 30000,
+    "total_billed": 252284780.58,
+    "total_scholarships_and_waivers": 22469388.61,
+    "total_reversals": 4853936.56,
+    "net_billed": 224961455.41,
+    "total_collected": 205412087.28,
+    "total_refunded": 6932107.15,
+    "collection_rate": 0.8823,
+    "outstanding_receivable": 29435110.12,
+    "credit_balances_owed": 2952411.34,
+    "late_fees_assessed": 6650,
+    "late_fee_amount": 621988.18,
+    "overdue_aging": {
+      "0-30": 0.0,
+      "31-60": 7549315.13,
+      "61-90": 0.0,
+      "90+": 15283441.02
+    },
+    "invoice_status_counts": {
+      "CANCELLED": 368,
+      "IN_CREDIT": 158,
+      "OVERDUE": 4616,
+      "PAID": 23517,
+      "PARTIALLY_PAID": 798,
+      "UNPAID": 543
+    },
+    "eligibility_assessments": 32654,
+    "eligibility_rate": 0.4606,
+    "scholarships_by_scheme": {
+      "SCHEME-INTL": {
+        "awards": 913,
+        "amount": 1251595.8
+      },
+      "SCHEME-MERIT-PG": {
+        "awards": 348,
+        "amount": 915579.6
+      },
+      "SCHEME-MERIT-UG": {
+        "awards": 1556,
+        "amount": 3225578.12
+      },
+      "SCHEME-NEED": {
+        "awards": 4667,
+        "amount": 9339799.85
+      },
+      "SCHEME-STEM": {
+        "awards": 2830,
+        "amount": 4313706.44
+      },
+      "SCHEME-WAIVER-HARDSHIP": {
+        "awards": 4401,
+        "amount": 1392320.0
+      },
+      "SCHEME-WAIVER-STAFF": {
+        "awards": 285,
+        "amount": 1987764.0
+      }
+    },
+    "withdrawals": 896,
+    "cancellations": 368
+  }
+}

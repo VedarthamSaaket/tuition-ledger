@@ -71,84 +71,86 @@
   },
   "boundary_cases": {
     "payments_allocated_to_the_cent": {
-      "count": 2391,
+      "count": 2381,
       "wrongly_flagged": 0
     },
     "awards_equal_to_eligible_fees": {
-      "count": 264,
+      "count": 249,
       "wrongly_flagged": 0
     },
     "refunds_equal_to_remaining_net_paid": {
-      "count": 39,
+      "count": 33,
       "wrongly_flagged": 0
     },
     "credit_refunds_split_across_payments": {
-      "count": 8
+      "count": 6
     },
     "payments_with_unapplied_credit": {
-      "count": 84
+      "count": 94
     }
   },
   "kpis": {
     "as_of": "2026-10-22",
     "students": 500,
     "invoices": 1500,
-    "total_billed": 11717769.96,
-    "total_scholarships_and_waivers": 1105921.34,
-    "total_reversals": 275272.35,
-    "net_billed": 10336576.27,
-    "total_collected": 9381103.65,
-    "total_refunded": 443431.85,
-    "collection_rate": 0.8647,
-    "outstanding_receivable": 1503261.86,
-    "credit_balances_owed": 102983.59,
-    "late_fees_assessed": 409,
-    "late_fee_amount": 36754.16,
+    "total_billed": 12293334.81,
+    "total_scholarships_and_waivers": 1121140.43,
+    "total_reversals": 250054.9,
+    "net_billed": 10922139.48,
+    "total_collected": 9982998.26,
+    "total_refunded": 387341.44,
+    "collection_rate": 0.8786,
+    "outstanding_receivable": 1497833.65,
+    "credit_balances_owed": 171293.92,
+    "late_fees_assessed": 309,
+    "late_fee_amount": 28016.01,
     "overdue_aging": {
       "0-30": 0.0,
-      "31-60": 548321.39,
+      "31-60": 405347.63,
       "61-90": 0.0,
-      "90+": 911848.02
+      "90+": 671040.21
     },
     "invoice_status_counts": {
-      "CANCELLED": 18,
-      "IN_CREDIT": 31,
-      "OVERDUE": 296,
-      "PAID": 1155
+      "CANCELLED": 20,
+      "IN_CREDIT": 29,
+      "OVERDUE": 228,
+      "PAID": 1152,
+      "PARTIALLY_PAID": 33,
+      "UNPAID": 38
     },
-    "eligibility_assessments": 1666,
-    "eligibility_rate": 0.4514,
+    "eligibility_assessments": 1642,
+    "eligibility_rate": 0.4592,
     "scholarships_by_scheme": {
       "SCHEME-INTL": {
-        "awards": 40,
-        "amount": 49930.0
+        "awards": 45,
+        "amount": 63757.75
       },
       "SCHEME-MERIT-PG": {
         "awards": 18,
-        "amount": 67675.35
+        "amount": 36040.35
       },
       "SCHEME-MERIT-UG": {
-        "awards": 61,
-        "amount": 130146.59
+        "awards": 80,
+        "amount": 163007.93
       },
       "SCHEME-NEED": {
-        "awards": 239,
-        "amount": 496733.4
+        "awards": 235,
+        "amount": 487095.44
       },
       "SCHEME-STEM": {
-        "awards": 140,
-        "amount": 209970.0
+        "awards": 134,
+        "amount": 219255.96
       },
       "SCHEME-WAIVER-HARDSHIP": {
-        "awards": 236,
-        "amount": 73555.0
+        "awards": 225,
+        "amount": 71145.0
       },
       "SCHEME-WAIVER-STAFF": {
-        "awards": 16,
-        "amount": 76061.0
+        "awards": 13,
+        "amount": 72169.0
       }
     },
-    "withdrawals": 56,
-    "cancellations": 18
+    "withdrawals": 41,
+    "cancellations": 20
   }
 }
