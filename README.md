@@ -3,7 +3,7 @@
 Tuition, fees, scholarships and student balance reconciliation.
 Built for the YottaFlex AI take home assignment.
 
-The generator produces linked synthetic records, labelled exceptions, validation reports and a PostgreSQL-backed read API. Interactive financial operations and a frontend are not yet implemented.
+The generator produces linked synthetic records, labelled exceptions and validation reports. The PostgreSQL-backed application provides account views, payment recording, refunds of unapplied credit and reconciliation runs. Interactive scholarship assessment, withdrawals and late-fee processing are not yet implemented.
 
 The role headers demonstrate access rules, not authentication: callers can choose a role and the default is platform administrator. Do not expose this prototype to an untrusted network or use real student data.
 
@@ -28,6 +28,16 @@ uvicorn ledger.api.main:app --reload
 ```
 
 The loader recreates its tables and destroys existing data in the target database. Open http://127.0.0.1:8000/docs for the API. Use `--profile full` for the full dataset, `--seed` to change the fixed seed, and `python -m ledger generate --clean` to omit anomalies.
+
+For the React interface, install Node.js 22 and run in a second terminal:
+
+```sh
+cd frontend
+npm ci
+npm run dev
+```
+
+Open the URL printed by Vite. Its development server proxies API requests to port 8000. The interface is a local demo: selecting a role does not prove identity.
 
 ## Test
 
