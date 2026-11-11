@@ -3,7 +3,7 @@
 Tuition, fees, scholarships and student balance reconciliation.
 Built for the YottaFlex AI take home assignment.
 
-The generator produces linked synthetic records, labelled exceptions and validation reports. The PostgreSQL-backed application provides account views, payment recording, refunds of unapplied credit and reconciliation runs. Interactive scholarship assessment, withdrawals and late-fee processing are not yet implemented.
+The generator produces linked synthetic records, labelled exceptions and validation reports. The PostgreSQL-backed application provides account views, payment recording, refunds of unapplied credit, late-fee assessment and reconciliation runs. Interactive scholarship assessment and withdrawals are not yet implemented.
 
 The role headers demonstrate access rules, not authentication: callers can choose a role and the default is platform administrator. Do not expose this prototype to an untrusted network or use real student data.
 
